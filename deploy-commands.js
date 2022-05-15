@@ -1,6 +1,6 @@
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-const { clientId, guildId, token } = require('./config.json');
+const { clientId, guildIds, token } = require('./config.json');
 const fs = require('node:fs');
 
 const commands = [];
@@ -18,10 +18,12 @@ const rest = new REST({ version: '9' }).setToken(token);
 		console.log('Started refreshing application (/) commands.');
 
 		// GUILD SLASH COMMANDS: TESTING
-		await rest.put(
-			Routes.applicationGuildCommands(clientId, guildId),
-			{ body: commands },
-		);
+		for (const guildId of guildIds) {
+			await rest.put(
+				Routes.applicationGuildCommands(clientId, guildId),
+				{ body: commands },
+			);
+		}
 
 		// FOR GLOBAL SLASH COMMANDS: DEVELOPED
 		// await rest.put(

@@ -2,11 +2,14 @@
 const fs = require('node:fs');
 const { Client, Collection, Intents } = require('discord.js');
 const { token } = require('./config.json');
+const { join } = require('node:path');
 
 // Create a new client instance
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 client.commands = new Collection();
+client.buttons = new Collection();
+
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
@@ -23,10 +26,18 @@ for (const file of eventFiles) {
 	if (event.once) {
 		client.once(event.name, (...args) => event.execute(...args, client));
 	} else {
-		client.on(event.name, (...args) => event.execute(...args));
+		client.on(event.name, (...args) => event.execute(...args, client));
 	}
 }
 
+const buttonFolders = fs.readdirSync('./buttons');
+for (const folder of buttonFolders) {
+	const buttonFiles = fs.readdirSync(`./buttons/${folder}`).filter(file => file.endsWith('.js'));
+	for (const file of buttonFiles) {
+		const button = require(`./buttons/${folder}/${file}`);
+		client.buttons.set(button.data.name, button);
+		}
+	}
 
 
 // Login to Discord with your client's token
