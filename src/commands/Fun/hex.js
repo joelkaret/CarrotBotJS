@@ -5,7 +5,7 @@ const {MessageActionRow, MessageButton} = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('hex')
-		.setDescription('Dispplays hex colour codes for Discord buttons.'),
+		.setDescription('Displays hex colour codes for Discord buttons.'),
 	async execute(interaction, client) {
 		const row = new MessageActionRow().addComponents(
 			new MessageButton()

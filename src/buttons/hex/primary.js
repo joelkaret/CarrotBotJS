@@ -1,5 +1,3 @@
-const interactionCommand = require("../../events/interactionCommand");
-
 module.exports = {
 	data: {
 		name: 'primary'
