@@ -18,5 +18,4 @@ for (const file of functions){
 client.handleEvents(eventFiles);
 client.handleCommands(commandFolders, `./src/commands`);
 client.handleButtons();
-client.instagramLogin();
 client.login(process.env.token);
