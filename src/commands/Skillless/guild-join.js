@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
+const { MessageActionRow, MessageButton } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -25,7 +26,18 @@ module.exports = {
 			option.setName('age')
 				.setDescription('Your age.')
 				.setRequired(false)),
+
 	async execute(interaction) {
+		const button_row = new MessageActionRow().addComponents(
+			new MessageButton()
+				.setCustomId('accept')
+				.setLabel('Accept')
+				.setStyle('SUCCESS'),
+			new MessageButton()
+				.setCustomId('delete')
+				.setLabel('Delete')
+				.setStyle('DANGER')
+		);
 		const ign = interaction.options.getString('ign')
 		const aliases = interaction.options.getString('aliases') || "No Aliases."
 		const age = interaction.options.getString('age') || "Not given."
@@ -47,6 +59,14 @@ module.exports = {
 			)
 			.setTimestamp()
 			.setFooter({ text: user.id })
-		await interaction.reply({ embeds: [embed] })
+		const message = await interaction.reply({ embeds: [embed], components: [button_row], fetchReply: true })
+		let agree = '✅'
+		let disagree = '❌'
+		// if (interaction.guildId == '713646548436910116') {
+		// 	agree = 'agree:976512268713984090'
+		// 	disagree = 'disagree:976512268713984090'❌✅✔️✖️
+		// }
+		await message.react(agree);
+		await message.react(disagree);
 	}
 };
