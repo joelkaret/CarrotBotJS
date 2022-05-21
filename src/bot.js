@@ -11,15 +11,13 @@ const functions = fs.readdirSync("./src/functions").filter(file => file.endsWith
 const eventFiles = fs.readdirSync("./src/events").filter(file => file.endsWith('.js'));
 const commandFolders = fs.readdirSync("./src/commands");
 
-for (const file of functions) {
-	require(`./functions/${file}`)(client);
-}
-
-
 (async () => {
+	for (const file of functions) {
+		require(`./functions/${file}`)(client);
+	}
 	await client.handleEvents(eventFiles);
 	await client.handleCommands(commandFolders, `./src/commands`);
 	await client.handleButtons();
-	await client.dbLogin();
 	await client.login(process.env.token);
+	await client.dbLogin();
 })();
