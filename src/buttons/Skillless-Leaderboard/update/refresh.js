@@ -1,5 +1,6 @@
 const leaderboard = require('../../../schemas/skillless-bwldb')
 const { MessageEmbed } = require('discord.js');
+const axios = require('axios')
 
 module.exports = {
 	data: {
@@ -17,6 +18,12 @@ module.exports = {
 			await interaction.reply({ content: `${interaction.member} There is no data for this mode stored.`, ephemeral: true })
 			return;
 		}
+		for (let i = 0; i < players.length; i++){
+			const uri = `https://api.mojang.com/user/profiles/${players[i].uuid}/names`
+			const { data } = await axios.get(uri)
+			const ign = data[data.length - 1].name
+			await ldbAdd(ign, players[i].uuid, players[i].winstreak, mode)
+		};
 		interaction.deferUpdate();
 		for (let i = 0; i < players.length; i++) {
 			for (let j = 0; j < players.length -i -1; j++) {
@@ -37,4 +44,20 @@ module.exports = {
 		)
 		await interaction.message.edit({ embeds: [tempEmbed], components: interaction.components, fetchReply: true })
 	}
+};
+
+async function ldbAdd(ign, uuid, winstreak, mode) {
+	let user = await leaderboard.findOne({ uuid: uuid, mode: mode })
+	if (!user) {
+		user = await new leaderboard({
+			_id: mongoose.Types.ObjectId(),
+			uuid: uuid,
+			ign: ign,
+			winstreak: winstreak,
+			mode: mode,
+		});
+		await user.save().catch(err => console.log(err));
+	};
+	await leaderboard.findOneAndUpdate({ uuid: uuid, mode: mode }, { ign: ign, winstreak: winstreak });
+	return user;
 };
