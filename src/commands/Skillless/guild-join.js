@@ -72,5 +72,6 @@ module.exports = {
 			//❌✅✔️✖️
 		await message.react(agree.id);
 		await message.react(disagree.id);
+		await interaction.reply({ content: `${interaction.member} Application sent in #guild-join-info`, ephemeral: true })
 	}
 };

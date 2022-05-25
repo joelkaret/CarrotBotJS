@@ -10,6 +10,7 @@ module.exports = {
 			await interaction.reply({ content: `${interaction.member} You do not have permssion to do this.`, ephemeral: true })
 			return
 		};
+		await interaction.deferUpdate();
 		await interaction.message.delete();
 	}
 }
