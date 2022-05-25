@@ -67,10 +67,11 @@ module.exports = {
 		const message = await channel.send({ embeds: [embed], components: [button_row], fetchReply: true })
 		let agree = '✅'
 		let disagree = '❌'
-		// if (interaction.guildId == '713646548436910116') {
-		// 	agree = 'agree:976512268713984090'
-		// 	disagree = 'disagree:976512268713984090'❌✅✔️✖️
-		// }
+		if (interaction.guildId == '713646548436910116') {
+			agree = 'agree:976512268713984090'
+			disagree = 'disagree:976512268713984090'
+			//❌✅✔️✖️
+		}
 		await message.react(agree);
 		await message.react(disagree);
 	}
