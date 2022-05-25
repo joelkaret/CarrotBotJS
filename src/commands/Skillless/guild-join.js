@@ -27,7 +27,7 @@ module.exports = {
 				.setDescription('Your age.')
 				.setRequired(false)),
 
-	async execute(interaction) {
+	async execute(interaction, client) {
 		const button_row = new MessageActionRow().addComponents(
 			new MessageButton()
 				.setCustomId('accept')
