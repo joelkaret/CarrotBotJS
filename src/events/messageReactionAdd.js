@@ -21,7 +21,7 @@ module.exports = {
 			return;
 		};
 		if (!(member.roles.cache.some(role => role.name === 'Veteran') || member.roles.cache.some(role => role.name === 'Guild Staff'))){
-			await reaction.message.reply({ content: `${member} You do not have permssion to do this.`, ephemeral: true })
+			reaction.users.remove(user);
 			return;
 		};
 	},
