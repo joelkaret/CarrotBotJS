@@ -59,7 +59,7 @@ module.exports = {
 			)
 			.setTimestamp()
 			.setFooter({ text: user.id })
-		const channel = client.channels.get("918550313693245470")
+		const channel = client.channels.cache.get("918550313693245470")
 		const message = await channel.send({ embeds: [embed], components: [button_row], fetchReply: true })
 		let agree = '✅'
 		let disagree = '❌'
