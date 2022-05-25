@@ -28,6 +28,10 @@ module.exports = {
 				.setRequired(false)),
 
 	async execute(interaction, client) {
+		if (!interaction.member.roles.cache.some(role => role.name === 'Public Members')){
+			await interaction.reply({ content: `${interaction.member} You do not have permssion to do this.`, ephemeral: true })
+			return
+		};
 		const button_row = new MessageActionRow().addComponents(
 			new MessageButton()
 				.setCustomId('accept')
