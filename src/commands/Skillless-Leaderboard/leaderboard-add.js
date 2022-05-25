@@ -49,6 +49,10 @@ module.exports = {
 				.setRequired(true)
 		),
 	async execute(interaction, client) {
+		if (!(interaction.member.roles.cache.some(role => role.name === 'Guild Staff') || interaction.member.id === 506884005195677696)){
+			await interaction.reply({ content: `${interaction.member} You do not have permssion to do this.`, ephemeral: true })
+			return;
+		}
 		const ign = interaction.options.getString('ign');
 		const winstreak = interaction.options.getInteger('winstreak');
 		const mode = interaction.options.getString('mode');
@@ -59,7 +63,7 @@ module.exports = {
 		// const uuid = await getJSONResponse(response.body) // success is if successful. player is the data.
 		const uuid = data.id
 		const leaderboard = await ldbAdd(ign, uuid, winstreak, mode)
-		await interaction.reply("um")
+		await interaction.reply(`${ign} added to ${mode} leaderboard! Refresh leaderboard to see changes!`)
 	}
 };
  

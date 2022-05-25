@@ -1,0 +1,1 @@
+worker: javascript src/bot.js

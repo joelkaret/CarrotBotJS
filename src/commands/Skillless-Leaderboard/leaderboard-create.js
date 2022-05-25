@@ -16,7 +16,7 @@ module.exports = {
 		const row = new MessageActionRow().addComponents(
 			new MessageButton()
 				.setCustomId('refresh')
-				.setLabel('🔄Refresh')
+				.setLabel('🗘Refresh')
 				.setStyle('SUCCESS'),
 		);
 		const overall = new MessageEmbed()
