@@ -65,14 +65,12 @@ module.exports = {
 			.setFooter({ text: user.id })
 		const channel = interaction.guild.channels.cache.get("918550313693245470")
 		const message = await channel.send({ embeds: [embed], components: [button_row], fetchReply: true })
-		let agree = '✅'
-		let disagree = '❌'
-		if (interaction.guildId == '713646548436910116') {
-			agree = 'agree:976512268713984090'
-			disagree = 'disagree:976512268713984090'
+		// let agree = '✅'
+		// let disagree = '❌'
+		let agree = client.emojis.cache.find(emoji => emoji.name === "agree");
+		let disagree = client.emojis.cache.find(emoji => emoji.name === "disagree");
 			//❌✅✔️✖️
-		}
-		await message.react(agree);
-		await message.react(disagree);
+		await message.react(agree.id);
+		await message.react(disagree.id);
 	}
 };

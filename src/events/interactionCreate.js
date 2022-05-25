@@ -12,7 +12,7 @@ module.exports = {
 			if (!command) return;
 
 			try{
-				await command.execute(interaction);
+				await command.execute(interaction, client);
 			} catch (err) {
 				if (err) console.error(err);
 				await interaction.reply({
