@@ -59,7 +59,8 @@ module.exports = {
 			)
 			.setTimestamp()
 			.setFooter({ text: user.id })
-		const message = await interaction.reply({ embeds: [embed], components: [button_row], fetchReply: true })
+		const channel = client.channels.get("918550313693245470")
+		const message = await channel.send({ embeds: [embed], components: [button_row], fetchReply: true })
 		let agree = '✅'
 		let disagree = '❌'
 		// if (interaction.guildId == '713646548436910116') {
