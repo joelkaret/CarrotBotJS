@@ -61,14 +61,14 @@ module.exports = {
 		
 		// https://api.mojang.com/user/profiles/{uuid}/names
 		// const uuid = await getJSONResponse(response.body) // success is if successful. player is the data.
-		let data;
+		let player;
 		try {
-			data = await axios.get(uri);
+			player = await axios.get(uri);
 		} catch (error) {
 			await interaction.reply(`\`${ign}\` is an invalid ign.`);
 			return;
 		}
-		const uuid = data.id;
+		const uuid = player.data.id;
 		if (uuid == null) {
 			await interaction.reply(`The ign \`${ign}\` does not exist!`);
 			return;
