@@ -57,13 +57,17 @@ module.exports = {
 		const winstreak = interaction.options.getInteger('winstreak');
 		const mode = interaction.options.getString('mode');
 		// `https://api.hypixel.net/player?key=${process.env.hypixelAPI}&name=${ign}`
-		const uri = `https://api.mojang.com/users/profiles/minecraft/${ign}?`
-		const { data } = await axios.get(uri)
+		const uri = `https://api.mojang.com/users/profiles/minecraft/${ign}?`;
+		const { data } = await axios.get(uri);
 		// https://api.mojang.com/user/profiles/{uuid}/names
 		// const uuid = await getJSONResponse(response.body) // success is if successful. player is the data.
-		const uuid = data.id
-		const leaderboard = await ldbAdd(ign, uuid, winstreak, mode)
-		await interaction.reply(`${ign} added to ${mode} leaderboard! Refresh leaderboard to see changes!`)
+		const uuid = data.id;
+		if (uuid == null) {
+			await interaction.reply(`The ign \`${ign}\` does not exist!`);
+			return;
+		}
+		const leaderboard = await ldbAdd(ign, uuid, winstreak, mode);
+		await interaction.reply(`${ign} added to ${mode} leaderboard! Refresh leaderboard to see changes!`);
 	}
 };
  
