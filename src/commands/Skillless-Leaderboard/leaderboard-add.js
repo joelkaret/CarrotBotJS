@@ -58,9 +58,15 @@ module.exports = {
 		const mode = interaction.options.getString('mode');
 		// `https://api.hypixel.net/player?key=${process.env.hypixelAPI}&name=${ign}`
 		const uri = `https://api.mojang.com/users/profiles/minecraft/${ign}?`;
-		const { data } = await axios.get(uri);
+		
 		// https://api.mojang.com/user/profiles/{uuid}/names
 		// const uuid = await getJSONResponse(response.body) // success is if successful. player is the data.
+		try {
+			const { data } = await axios.get(uri);
+		} catch (error) {
+			await interaction.reply(`\`${ign}\` is an invalid ign.`);
+			return;
+		}
 		const uuid = data.id;
 		if (uuid == null) {
 			await interaction.reply(`The ign \`${ign}\` does not exist!`);
