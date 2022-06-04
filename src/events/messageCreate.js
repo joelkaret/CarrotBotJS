@@ -32,7 +32,8 @@ module.exports = {
 			content: message.content,
 			embeds: message.embeds,
 			components: message.components,
-			fetchReply: true
-		})
+			files: [...message.attachments.values()],
+			fetchReply: true,
+		});
 	},
 };
