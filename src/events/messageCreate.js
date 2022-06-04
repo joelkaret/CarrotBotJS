@@ -15,7 +15,8 @@ module.exports = {
 		if (!channel) {
 			channel = await loggerGuild.channels.create(channelName)
 		}
-		const userName = message.member.nickname ? message.member.nickname : message.author.username
+		const member = message.guild.members.fetch(`'${message.author.id}'`)
+		const userName = member.nickname ? member.nickname : message.author.username
 		const embed = new MessageEmbed()
 			.setColor('#FFFFFF')
 			.setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL() })
