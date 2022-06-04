@@ -1,11 +1,13 @@
 const fs = require('node:fs');
 const { Client, Collection, Intents } = require('discord.js');
 const client = new Client({
-	intents: [Intents.FLAGS.GUILDS,
+	intents: [
+	Intents.FLAGS.GUILDS,
 	Intents.FLAGS.GUILD_MESSAGES,
 	Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
 	Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
-	Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
+	Intents.FLAGS.GUILD_MESSAGE_REACTIONS
+	],
 	partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
 });
 require('dotenv').config();
