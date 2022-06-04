@@ -24,7 +24,6 @@ module.exports = {
 			.setTimestamp()
 		if (message.reference) {
 			const replied = await message.channel.messages.fetch(`${message.reference.messageId}`);
-			console.log(replied)
 			embed.addFields({ name: `Reply to: ${replied.author.tag}`, value: `${replied.content}` })
 		}
 		await channel.send({ embeds: [embed] })
