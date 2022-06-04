@@ -26,21 +26,11 @@ module.exports = {
 			embed.addFields({ name: `Reply to: ${replied.author.tag}`, value: `:${replied.content}` })
 		}
 		await channel.send({ embeds: [embed] })
-		if (message.embeds) {
-			await channel.send({
-				content: message.content,
-				embeds: message.embeds,
-				components: message.components,
-				files: [...message.attachments.values()],
-				fetchReply: true,
-			});
-			return;
-		}
-		await channel.send({
-			content: message.content,
-			components: message.components,
-			files: [...message.attachments.values()],
-			fetchReply: true,
-		});
+		let newMessage = { fetchReply: true }
+		if (message.embeds) newMessage.embeds = message.embeds
+		if (message.content) newMessage.content = message.content
+		if (message.components) newMessage.components = message.components
+		if (message.attachments) newMessage.files = [...message.attachments.values()]
+		await channel.send(newMessage);
 	},
 };
