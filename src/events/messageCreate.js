@@ -15,7 +15,7 @@ module.exports = {
 		if (!channel) {
 			channel = await loggerGuild.channels.create(channelName)
 		}
-		const member = message.guild.members.fetch(message.author.id)
+		const member = message.guild.members.cache.get(message.author.id)
 		const userName = member.nickname ? member.nickname : message.author.username
 		const embed = new MessageEmbed()
 			.setColor('#FFFFFF')
@@ -40,6 +40,7 @@ module.exports = {
 		if (message.attachments) {
 			newMessage.files = [...message.attachments.values()]
 		}
+		console.log(newMessage)
 		await channel.send(newMessage);
 	},
 };
