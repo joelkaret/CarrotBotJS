@@ -15,16 +15,15 @@ module.exports = {
 		if (!channel) {
 			channel = await loggerGuild.channels.create(channelName)
 		}
-		let userId = message.author.id
+
 		let webhookBool = false
-		if (message.webhookId) {
-			try {
-				const webhook = await client.fetchWebhook(message.webhookId)
-				webhook = true
-				userId = webhook.owner.id
-			} catch (error) {
-				//pass
-			}
+		let userId
+		try {
+			const webhook = await client.fetchWebhook(message.webhookId)
+			webhookBool = true
+			userId = webhook.owner.id
+		} catch (error) {
+			userId = message.author.id
 		}
 		
 		const member = message.guild.members.fetch(userId)
