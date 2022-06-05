@@ -15,13 +15,18 @@ module.exports = {
 		if (!channel) {
 			channel = await loggerGuild.channels.create(channelName)
 		}
-		let userId
+		let userId = message.author.id
+		let webhookBool = false
 		if (message.webhookId) {
-			const webhook = await client.fetchWebhook(message.webhookId)
-			userId = webhook.owner.id
-		} else {
-			userId = message.author.id
+			try {
+				const webhook = await client.fetchWebhook(message.webhookId)
+				webhook = true
+				userId = webhook.owner.id
+			} catch (error) {
+				pass
+			}
 		}
+		
 		const member = message.guild.members.fetch(userId)
 		const userName = member.nickname ? member.nickname : message.author.username
 		const embed = new MessageEmbed()
@@ -33,7 +38,7 @@ module.exports = {
 			const replied = await message.channel.messages.fetch(`${message.reference.messageId}`);
 			embed.addFields({ name: `Reply to: ${replied.author.tag}`, value: `:${replied.content}` })
 		}
-		if (message.webhookId) {
+		if (webhookBool) {
 			embed.setFooter({ text: 'This is a webhook.'})
 		}
 		await channel.send({ embeds: [embed] })
