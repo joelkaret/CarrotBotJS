@@ -27,7 +27,7 @@ module.exports = {
 			embed.addFields({ name: `Reply to: ${replied.author.tag}`, value: `:${replied.content}` })
 		}
 		await channel.send({ embeds: [embed] })
-		let newMessage = { fetchReply: true }
+		let newMessage = { fetchReply: false }
 		if (message.embeds) {
 			newMessage.embeds = message.embeds
 		}
