@@ -23,15 +23,23 @@ module.exports = {
 			.setDescription(`Nickname: ${userName}`)
 			.setTimestamp()
 		if (message.reference) {
-			const replied = await message.channel.messages.fetch(`${message.reference.messageId}`);
+			const replied = await message.channel.messages.get(`${message.reference.messageId}`);
 			embed.addFields({ name: `Reply to: ${replied.author.tag}`, value: `:${replied.content}` })
 		}
 		await channel.send({ embeds: [embed] })
 		let newMessage = { fetchReply: true }
-		if (message.embeds) newMessage.embeds = message.embeds
-		if (message.content) newMessage.content = message.content
-		if (message.components) newMessage.components = message.components
-		if (message.attachments) newMessage.files = [...message.attachments.values()]
+		if (message.embeds) {
+			newMessage.embeds = message.embeds
+		}
+		if (message.content) {
+			newMessage.content = message.content
+		}
+		if (message.components) {
+			newMessage.components = message.components
+		}
+		if (message.attachments) {
+			newMessage.files = [...message.attachments.values()]
+		}
 		await channel.send(newMessage);
 	},
 };
