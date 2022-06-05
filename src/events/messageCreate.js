@@ -23,7 +23,7 @@ module.exports = {
 				webhook = true
 				userId = webhook.owner.id
 			} catch (error) {
-				pass
+				//pass
 			}
 		}
 		
