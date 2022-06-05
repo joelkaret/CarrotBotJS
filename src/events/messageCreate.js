@@ -15,12 +15,17 @@ module.exports = {
 		if (!channel) {
 			channel = await loggerGuild.channels.create(channelName)
 		}
+		let userId
 		if (message.webhookId) {
 			console.log(message.webhookId)
 			console.log(message)
+			const webhook = client.fetchWebhook(message.webhookId)
+			userId = webhook.owner.id
 			return;
+		} else {
+			userId = message.author.id
 		}
-		const member = message.guild.members.fetch(message.author.id)
+		const member = message.guild.members.fetch(userId)
 		const userName = member.nickname ? member.nickname : message.author.username
 		const embed = new MessageEmbed()
 			.setColor('#FFFFFF')
