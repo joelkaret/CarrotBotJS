@@ -21,7 +21,6 @@ module.exports = {
 			console.log(message)
 			const webhook = client.fetchWebhook(message.webhookId)
 			userId = webhook.owner.id
-			return;
 		} else {
 			userId = message.author.id
 		}
