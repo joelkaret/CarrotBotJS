@@ -17,7 +17,7 @@ module.exports = {
 		}
 		let userId
 		if (message.webhookId) {
-			const webhook = client.fetchWebhook(message.webhookId)
+			const webhook = await client.fetchWebhook(message.webhookId)
 			console.log(webhook)
 			userId = webhook.owner.id
 		} else {
