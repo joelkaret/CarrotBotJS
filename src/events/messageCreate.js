@@ -15,8 +15,11 @@ module.exports = {
 		if (!channel) {
 			channel = await loggerGuild.channels.create(channelName)
 		}
-		console.log(message.author.username)
-		console.log(message.author.id)
+		if (message.webhook) {
+			console.log(message.webhook)
+			console.log(message)
+			return;
+		}
 		const member = message.guild.members.fetch(message.author.id)
 		const userName = member.nickname ? member.nickname : message.author.username
 		const embed = new MessageEmbed()
@@ -25,24 +28,15 @@ module.exports = {
 			.setDescription(`Nickname: ${userName}`)
 			.setTimestamp()
 		if (message.reference) {
-			const replied = await message.channel.messages.get(`${message.reference.messageId}`);
+			const replied = await message.channel.messages.fetch(`${message.reference.messageId}`);
 			embed.addFields({ name: `Reply to: ${replied.author.tag}`, value: `:${replied.content}` })
 		}
 		await channel.send({ embeds: [embed] })
-		let newMessage = { fetchReply: false }
-		if (message.embeds) {
-			newMessage.embeds = message.embeds
-		}
-		if (message.content) {
-			newMessage.content = message.content
-		}
-		if (message.components) {
-			newMessage.components = message.components
-		}
-		if (message.attachments) {
-			newMessage.files = [...message.attachments.values()]
-		}
-		console.log(newMessage)
+		let newMessage = { fetchReply: true }
+		if (message.embeds) newMessage.embeds = message.embeds
+		if (message.content) newMessage.content = message.content
+		if (message.components) newMessage.components = message.components
+		if (message.attachments) newMessage.files = [...message.attachments.values()]
 		await channel.send(newMessage);
 	},
 };
