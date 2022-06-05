@@ -18,7 +18,6 @@ module.exports = {
 		let userId
 		if (message.webhookId) {
 			const webhook = await client.fetchWebhook(message.webhookId)
-			console.log(webhook)
 			userId = webhook.owner.id
 		} else {
 			userId = message.author.id
@@ -33,6 +32,9 @@ module.exports = {
 		if (message.reference) {
 			const replied = await message.channel.messages.fetch(`${message.reference.messageId}`);
 			embed.addFields({ name: `Reply to: ${replied.author.tag}`, value: `:${replied.content}` })
+		}
+		if (message.webhookId) {
+			embed.setFooter({ text: 'This is a webhook.'})
 		}
 		await channel.send({ embeds: [embed] })
 		let newMessage = { fetchReply: true }
