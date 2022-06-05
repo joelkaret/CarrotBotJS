@@ -15,8 +15,8 @@ module.exports = {
 		if (!channel) {
 			channel = await loggerGuild.channels.create(channelName)
 		}
-		if (message.webhook) {
-			console.log(message.webhook)
+		if (message.webhookId) {
+			console.log(message.webhookId)
 			console.log(message)
 			return;
 		}
