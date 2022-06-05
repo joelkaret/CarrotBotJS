@@ -15,6 +15,8 @@ module.exports = {
 		if (!channel) {
 			channel = await loggerGuild.channels.create(channelName)
 		}
+		console.log(message.author.username)
+		console.log(message.author.id)
 		const member = message.guild.members.fetch(message.author.id)
 		const userName = member.nickname ? member.nickname : message.author.username
 		const embed = new MessageEmbed()
