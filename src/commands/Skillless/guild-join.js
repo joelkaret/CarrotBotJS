@@ -21,11 +21,11 @@ module.exports = {
 		.addStringOption(option =>
 			option.setName('aliases')
 				.setDescription('Any other names you are known by.')
-				.setRequired(false))
+				.setRequired(true))
 		.addStringOption(option =>
 			option.setName('age')
 				.setDescription('Your age.')
-				.setRequired(false)),
+				.setRequired(true)),
 
 	async execute(interaction, client) {
 		if (!interaction.member.roles.cache.some(role => role.name === 'Public Members')){
