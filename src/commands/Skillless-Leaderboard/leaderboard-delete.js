@@ -44,6 +44,10 @@ module.exports = {
 				.setRequired(true)
 		),
 	async execute(interaction, client) {
+		if (!(interaction.member.roles.cache.some(role => role.name === 'Guild Staff') || String(interaction.member.id) == "506884005195677696")){
+			await interaction.reply({ content: `${interaction.member} You do not have permssion to do this.`, ephemeral: true })
+			return;
+		}
 		const ign = interaction.options.getString('ign');
 		const mode = interaction.options.getString('mode');
 		// `https://api.hypixel.net/player?key=${process.env.hypixelAPI}&name=${ign}`
