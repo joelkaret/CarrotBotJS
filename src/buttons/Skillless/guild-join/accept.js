@@ -10,7 +10,7 @@ module.exports = {
 			return
 		};
 		const userId = interaction.message.embeds[0].footer.text.toString()
-		const member = interaction.client.users.fetch(userId)
+		const member = client.users.fetch(userId)
 		await member.send('Your application into Skillless has been accepted!')
 			.catch(() => console.log(`${member} has dm's off`));
 		await member.send('Please make sure you have left any current guild, and have guild invites turned on.')
