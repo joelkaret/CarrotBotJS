@@ -12,7 +12,9 @@ module.exports = {
 		const userId = interaction.message.embeds[0].footer.text
 		const member = interaction.client.users.cache.find(user => user.id === userId)
 		await member.send('Your application into Skillless has been accepted!')
+			.catch(() => console.log(`${member} has dm's off`));
 		await member.send('Please make sure you have left any current guild, and have guild invites turned on.')
+			.catch(() => interaction.reply({ content: `${member} does not have direct messages turned on. Please let them know that you have accepted this manually.`, ephemeral: true }));
 		const tempEmbed = new MessageEmbed(interaction.message.embeds[0])
 		const tempComponents = interaction.message.components
 		tempComponents[0].components[0].setDisabled(true)
