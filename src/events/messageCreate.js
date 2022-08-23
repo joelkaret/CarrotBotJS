@@ -46,6 +46,7 @@ module.exports = {
 		if (message.content) newMessage.content = message.content
 		if (message.components) newMessage.components = message.components
 		if (message.attachments) newMessage.files = [...message.attachments.values()]
-		await channel.send(newMessage);
+		await channel.send(newMessage)
+			.catch(() => console.log("Uh oh, something went wrong, byebye actual logs, hello easy fix"))
 	},
 };
