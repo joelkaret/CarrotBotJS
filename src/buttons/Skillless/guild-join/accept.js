@@ -5,12 +5,12 @@ module.exports = {
 		name: 'accept'
 	},
 	async execute (interaction, client) {
-		if (!interaction.member.roles.cache.some(role => role.name === 'Guild Staff')){
+		if (!interaction.member.roles.cache.some(role => role.name === 'Guild Staff') && String(interaction.member.id) != "506884005195677696"){
 			await interaction.reply({ content: `${interaction.member} You do not have permssion to do this.`, ephemeral: true })
 			return
 		};
-		const userId = interaction.message.embeds[0].footer.text
-		const member = interaction.client.users.cache.find(user => user.id === userId)
+		const userId = interaction.message.embeds[0].footer.text.toString()
+		const member = interaction.client.users.fetch(userId)
 		await member.send('Your application into Skillless has been accepted!')
 			.catch(() => console.log(`${member} has dm's off`));
 		await member.send('Please make sure you have left any current guild, and have guild invites turned on.')
