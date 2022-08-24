@@ -15,7 +15,6 @@ module.exports = {
 		if (!channel) {
 			channel = await loggerGuild.channels.create(channelName)
 		}
-
 		let webhookBool = false
 		let userId
 		try {
