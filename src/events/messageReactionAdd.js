@@ -39,7 +39,7 @@ module.exports = {
 			reaction.users.remove(user);
 			return;
 		};
-		if (!(member.roles.cache.some(role => role.name === 'Veteran') || member.roles.cache.some(role => role.name === 'Guild Staff'))){
+		if (!(member.roles.cache.some(role => role.id === '759257487605366795') || member.roles.cache.some(role => role.name === 'Guild Staff'))){
 			reaction.users.remove(user);
 			return;
 		};
