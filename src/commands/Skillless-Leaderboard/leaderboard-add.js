@@ -68,7 +68,7 @@ module.exports = {
 			await interaction.reply(`\`${ign}\` is an invalid ign.`);
 			return;
 		}
-		const uuid = player.id;
+		const uuid = player.data.id;
 		if (uuid == null) {
 			await interaction.reply(`The ign \`${ign}\` does not exist!`);
 			return;
