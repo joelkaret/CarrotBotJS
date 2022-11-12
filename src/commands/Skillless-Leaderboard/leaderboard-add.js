@@ -57,7 +57,7 @@ module.exports = {
 		const winstreak = interaction.options.getInteger('winstreak');
 		const mode = interaction.options.getString('mode');
 		// `https://api.hypixel.net/player?key=${process.env.hypixelAPI}&name=${ign}`
-		const uri = `https://api.mojang.com/users/profiles/minecraft/${ign}?`;
+		const uri = `https://api.mojang.com/users/profiles/minecraft/${ign}`;
 		
 		// https://api.mojang.com/user/profiles/{uuid}/names
 		// const uuid = await getJSONResponse(response.body) // success is if successful. player is the data.
@@ -68,7 +68,7 @@ module.exports = {
 			await interaction.reply(`\`${ign}\` is an invalid ign.`);
 			return;
 		}
-		const uuid = player.data.id;
+		const uuid = player.id;
 		if (uuid == null) {
 			await interaction.reply(`The ign \`${ign}\` does not exist!`);
 			return;

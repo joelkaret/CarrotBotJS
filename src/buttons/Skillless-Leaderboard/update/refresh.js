@@ -19,9 +19,9 @@ module.exports = {
 			return;
 		}
 		for (let i = 0; i < players.length; i++){
-			const uri = `https://api.mojang.com/user/profiles/${players[i].uuid}/names`
+			const uri = `https://api.mojang.com/user/profile/${players[i].uuid}`
 			const { data } = await axios.get(uri)
-			const ign = data[data.length - 1].name
+			const ign = data.name
 			await ldbAdd(ign, players[i].uuid, players[i].winstreak, mode)
 		};
 		interaction.deferUpdate();
