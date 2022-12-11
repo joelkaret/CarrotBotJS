@@ -1,0 +1,10 @@
+const mongoose = require('mongoose')
+const SBL_Schema = new mongoose.Schema({
+	_id: mongoose.Schema.Types.ObjectId,
+	uuid: String,
+	ign: String,
+	winstreak: Number,
+	mode: String,
+});
+
+module.exports = mongoose.model('sbl', SBL_Schema, 'skillless_bw_ldb');
