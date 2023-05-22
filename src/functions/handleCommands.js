@@ -24,12 +24,10 @@ module.exports = (client) => {
 
 				// GUILD SLASH COMMANDS: TESTING
 				for (const guildId of guildIds) {
-					console.log(clientId, guildId)
 					await rest.put(
 						Routes.applicationGuildCommands(clientId, guildId),
 						{ body: client.commandArray },
 					);
-					console.log(guildId)
 				}
 
 				// FOR GLOBAL SLASH COMMANDS: DEVELOPED

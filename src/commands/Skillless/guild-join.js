@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { MessageActionRow, MessageButton } = require('discord.js');
 
 module.exports = {
@@ -67,7 +67,7 @@ module.exports = {
 		const fit = interaction.options.getString('fit')
 		const other = interaction.options.getString('other')
 
-		const embed = new MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setColor('#cfc2ff')
 			.setAuthor({ name: user.tag, iconURL: user.displayAvatarURL() })
 			.setDescription(`${user}`)

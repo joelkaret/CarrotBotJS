@@ -1,6 +1,5 @@
 // const { request } = require('undici');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
 require('dotenv').config();
 const axios = require('axios')
 const leaderboard = require('../../schemas/skillless-bwldb')
@@ -49,8 +48,9 @@ module.exports = {
 				.setRequired(true)
 		),
 	async execute(interaction, client) {
+		await interaction.reply({ content: `${interaction.member} Working...`})
 		if (!(interaction.member.roles.cache.some(role => role.name === 'Guild Staff') || String(interaction.member.id) == "506884005195677696")){
-			await interaction.reply({ content: `${interaction.member} You do not have permssion to do this.`, ephemeral: true })
+			await interaction.editReply({ content: `${interaction.member} You do not have permssion to do this.`})
 			return;
 		}
 		const ign = interaction.options.getString('ign');
@@ -65,16 +65,16 @@ module.exports = {
 		try {
 			player = await axios.get(uri);
 		} catch (error) {
-			await interaction.reply(`\`${ign}\` is an invalid ign.`);
+			await interaction.editReply(`\`${ign}\` is an invalid ign.`);
 			return;
 		}
 		const uuid = player.data.id;
 		if (uuid == null) {
-			await interaction.reply(`The ign \`${ign}\` does not exist!`);
+			await interaction.editReply(`The ign \`${ign}\` does not exist!`);
 			return;
 		}
 		const leaderboard = await ldbAdd(ign, uuid, winstreak, mode);
-		await interaction.reply(`${ign} added to ${mode} leaderboard! Refresh leaderboard to see changes!`);
+		await interaction.editReply(`${ign} added to ${mode} leaderboard! Refresh leaderboard to see changes!`);
 	}
 };
  
@@ -82,7 +82,7 @@ async function ldbAdd(ign, uuid, winstreak, mode) {
 	let user = await leaderboard.findOne({ uuid: uuid, mode: mode })
 	if (!user) {
 		user = await new leaderboard({
-			_id: mongoose.Types.ObjectId(),
+			_id: new mongoose.Types.ObjectId(),
 			uuid: uuid,
 			ign: ign,
 			winstreak: winstreak,

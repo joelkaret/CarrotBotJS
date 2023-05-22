@@ -84,3 +84,5 @@ pattern = "**/{*.js,*.jsx,*.ts,*.tsx}"
 
 [languages.javascript.languageServer]
 start = "typescript-language-server --stdio"
+
+run="apt update && apt install ffmpeg-static -y && node bot.js"

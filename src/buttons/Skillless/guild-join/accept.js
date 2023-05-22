@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
 	data: {
@@ -16,7 +16,7 @@ module.exports = {
 			.catch(() => console.log(`${member} has dm's off`));
 		await member.send('Please make sure you have left any current guild, and have guild invites turned on.')
 			.catch(() => interaction.reply({ content: `${member} does not have direct messages turned on. Please let them know that you have accepted this manually.`, ephemeral: true }));
-		const tempEmbed = new MessageEmbed(interaction.message.embeds[0])
+		const tempEmbed = new EmbedBuilder(interaction.message.embeds[0])
 		const tempComponents = interaction.message.components
 		tempComponents[0].components[0].setDisabled(true)
 		tempEmbed.addFields(

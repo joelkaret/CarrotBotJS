@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -26,7 +26,7 @@ module.exports = {
 		const avatarUrl = user.displayAvatarURL();
 		
 		if (interaction.options.getString('display') == 'embed') {
-			const embed = new MessageEmbed()
+			const embed = new EmbedBuilder()
 				.setColor('#0099ff')
 				.setImage(avatarUrl)
 			await interaction.reply({ embeds: [embed] })

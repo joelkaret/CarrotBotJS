@@ -1,6 +1,5 @@
 // const { request } = require('undici');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
 require('dotenv').config();
 const axios = require('axios')
 const leaderboard = require('../../schemas/skillless-bwldb')

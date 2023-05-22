@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { MessageActionRow, MessageButton } = require('discord.js');
 require('dotenv').config();
 
@@ -19,22 +19,22 @@ module.exports = {
 				.setLabel('🗘Refresh')
 				.setStyle('SUCCESS'),
 		);
-		const overall = new MessageEmbed()
+		const overall = new EmbedBuilder()
 			.setColor('#2C2F33')
 			.addFields({ name: 'Overall', value: `\u200B`, inline: false })
-		const solos = new MessageEmbed()
+		const solos = new EmbedBuilder()
 			.setColor('#2C2F33')
 			.addFields({ name: 'Solos', value: `\u200B`, inline: false })
-		const doubles = new MessageEmbed()
+		const doubles = new EmbedBuilder()
 			.setColor('#2C2F33')
 			.addFields({ name: 'Doubles', value: `\u200B`, inline: false })
-		const threes = new MessageEmbed()
+		const threes = new EmbedBuilder()
 			.setColor('#2C2F33')
 			.addFields({ name: 'Threes', value: `\u200B`, inline: false })
-		const fours = new MessageEmbed()
+		const fours = new EmbedBuilder()
 			.setColor('#2C2F33')
 			.addFields({ name: 'Fours', value: `\u200B`, inline: false })
-		const fourVsFour = new MessageEmbed()
+		const fourVsFour = new EmbedBuilder()
 			.setColor('#2C2F33')
 			.addFields({ name: '4v4', value: `\u200B`, inline: false })
 		await interaction.channel.send({ embeds: [overall], components: [row] });
