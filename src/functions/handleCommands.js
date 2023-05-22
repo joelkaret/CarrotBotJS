@@ -17,17 +17,19 @@ module.exports = (client) => {
 			}
 		}
 		const rest = new REST({ version: '9' }).setToken(process.env.token);
-
+		
 		(async () => {
 			try {
 				console.log('Started refreshing application (/) commands.');
 
 				// GUILD SLASH COMMANDS: TESTING
 				for (const guildId of guildIds) {
+					console.log(clientId, guildId)
 					await rest.put(
 						Routes.applicationGuildCommands(clientId, guildId),
 						{ body: client.commandArray },
 					);
+					console.log(guildId)
 				}
 
 				// FOR GLOBAL SLASH COMMANDS: DEVELOPED
