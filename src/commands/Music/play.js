@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { EmbedBuilder } = require("discord.js");
 const { QueryType } = require("discord-player")
-const { YouTubeExtractor, SpotifyExtractor } = require("@discord-player/extractor");
+const { YouTubeExtractor, SpotifyExtractor, AppleMusicExtractor } = require("@discord-player/extractor");
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -23,7 +23,7 @@ module.exports = {
 		await interaction.reply('Working...')
 		interaction.client.player.extractors.register(YouTubeExtractor);
 		interaction.client.player.extractors.register(SpotifyExtractor);
-
+		interaction.client.player.extractors.register(AppleMusicExtractor);
 		
 		try {
             const stri = interaction.options.getString("247")
