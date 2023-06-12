@@ -14,7 +14,7 @@ module.exports = {
         try {
             const queue = useQueue(interaction.guild);
 
-            if (!queue || !queue.isPlaying()) {
+            if (!queue && !queue.isPlaying()) {
                 return interaction.editReply("There is nothing playing");
             }
 

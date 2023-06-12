@@ -12,7 +12,7 @@ module.exports = {
 		const queue = useQueue(interaction.guildId)
 
         // Check if the queue is empty
-		if (!queue)
+		if (!queue && !queue.isPlaying())
 		{
 			await interaction.editReply("There are no songs in the queue")
 			return;

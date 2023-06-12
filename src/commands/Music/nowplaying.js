@@ -12,7 +12,7 @@ module.exports = {
 
         const queue = useQueue(interaction.guild)
 
-        if (!queue || !queue.isPlaying()) {
+        if (!queue && !queue.isPlaying()) {
             return interaction.editReply({ content: "There is not playing anything"})
         }
 
