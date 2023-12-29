@@ -17,7 +17,7 @@ module.exports = {
 			new ButtonBuilder()
 				.setCustomId('refresh')
 				.setLabel('🗘Refresh')
-				.setStyle('SUCCESS'),
+				.setStyle('Success'),
 		);
 		const overall = new EmbedBuilder()
 			.setColor('#2C2F33')
