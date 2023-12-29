@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { EmbedBuilder } = require('discord.js');
-const { ActionRowBuilder(), MessageButton } = require('discord.js');
+const { ActionRowBuilder, MessageButton } = require('discord.js');
 require('dotenv').config();
 
 module.exports = {
@@ -13,7 +13,7 @@ module.exports = {
 			return;
 		}
 		await interaction.deferReply({ ephemeral: true })
-		const row = new ActionRowBuilder()().addComponents(
+		const row = new ActionRowBuilder().addComponents(
 			new MessageButton()
 				.setCustomId('refresh')
 				.setLabel('🗘Refresh')
