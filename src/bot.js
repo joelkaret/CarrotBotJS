@@ -80,17 +80,33 @@ rule.dayOfWeek = 3;
 rule.hour = 12;
 rule.minute = 0;
 rule.tz = 'America/Atikokan' // EST
+const rule2 = new schedule.RecurrenceRule();
+rule2.minute = 0;
 
-const job = schedule.scheduleJob(rule, function(){
+const job1 = schedule.scheduleJob(rule, function(){
 	const skilllessGuildId = "713646548436910116";
 	const channelId = "759265396901150761"
-	let channel = skilllessGuildId.channels.cache.find(
+	const skilllessGuild = client.guilds.cache.get(skilllessGuildId);
+	let channel = skilllessGuild.channels.cache.find(
                 (C) => C.id == channelId
             );
 	if (channel) {
 		channel.send('https://cdn.discordapp.com/attachments/852716030601330740/1190718826766143520/walter_wedsendy.mp4?ex=65a2d252&is=65905d52&hm=ad65957d76fec08992c35123391585335b9e8daeebad755cd475faa79273e9bb&');
 	}
 });
+
+const job2 = schedule.scheduleJob(rule2, function(){
+        const carrotClubId = "835942211635773472";
+        const channelId = "835963832718590023"
+        const carrotClub = client.guilds.cache.get(carrotClubId);
+        let channel = carrotClub.channels.cache.find(
+                (C) => C.id == channelId
+            );
+        if (channel) {
+                channel.send('Ding Dong!')
+        }
+});
+
 
 
 // exec("kill 1")
