@@ -106,12 +106,3 @@ const job2 = schedule.scheduleJob(rule2, function(){
                 channel.send('Ding Dong!')
         }
 });
-
-
-
-// exec("kill 1")
-
-//client.login(process.env.token)
-
-// Keep Alive
-// const keep_alive = require('./keep_alive.js')
