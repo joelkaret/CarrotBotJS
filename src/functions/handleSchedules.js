@@ -11,7 +11,7 @@ module.exports = (client) => {
 			for (const file of scheduleFiles) {
 				const schedule = require(`../schedules/${folder}/${file}`);
 				try {
-					schedule();
+					schedule(client);
 					console.log(
 						`[${cyanBright("DEBUG")}] ${gray(
 							"Schedule deployed successfully"
