@@ -6,4 +6,4 @@ const dinoLdb_Schema = new mongoose.Schema({
 	score: Number,
 });
 
-module.exports = mongoose.model("dino_ldb", dinoLdb_Schema, "carrot_dino_ldb");
+module.exports = mongoose.model("carrot_dino_ldb", dinoLdb_Schema, "dino_ldb");
