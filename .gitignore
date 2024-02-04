@@ -3,3 +3,5 @@ node_modules
 .config
 .cache
 .upm
+dinoReacted.txt
+lastDino.txt
