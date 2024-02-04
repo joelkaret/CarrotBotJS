@@ -12,10 +12,10 @@ module.exports = (client) => {
 		let channel = carrotClub.channels.cache.find((C) => C.id == channelId);
 		if (channel) {
 			const messageId = await channel.send("Ding Dong!");
-			fs.writeFile("dinoReacted.txt", `${messageId}`, (err) => {
+			fs.writeFile("src/lastDino.txt", `${messageId}`, (err) => {
 				if (err) throw err;
 			});
-			fs.writeFile("dinoReacted.txt", "false", (err) => {
+			fs.writeFile("src/dinoReacted.txt", "false", (err) => {
 				if (err) throw err;
 			});
 		}

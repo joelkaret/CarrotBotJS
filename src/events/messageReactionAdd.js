@@ -32,34 +32,33 @@ module.exports = {
 
 		// Chiming Clock Game:
 
-		let lastDinoId;
-		fs.readFile("lastDino.txt", (err, inputD) => {
-			if (err) throw err;
-			lastDinoId = inputD.toString();
+		const lastDinoId = fs.readFileSync("src/lastDino.txt", {
+			encoding: "utf8",
+			flag: "r",
 		});
 		if (reaction.message.id === lastDinoId) {
-			let dinoReacted = false;
-			fs.readFile("dinoReacted.txt", (err, inputD) => {
-				if (err) throw err;
-				temp = inputD.toString();
-				if (temp === "false") {
-					dinoReacted = false;
-				} else if (temp === "true") {
-					dinoReacted = true;
-				} else {
-					console.log(
-						`[${cyanBright("DEBUG")}] ${gray(
-							"dinoReacted.txt was neither true nor false."
-						)}`
-					);
-				}
+			let dinoReacted = fs.readFileSync("src/dinoReacted.txt", {
+				encoding: "utf8",
+				flag: "r",
 			});
+			if (dinoReacted === "false") {
+				dinoReacted = false;
+			} else if (dinoReacted === "true") {
+				dinoReacted = true;
+			} else {
+				console.log(
+					`[${cyanBright("DEBUG")}] ${gray(
+						"dinoReacted.txt was neither true nor false."
+					)}`
+				);
+			}
+
 			if (!dinoReacted) {
 				if (reaction.emoji.toString() == "🦖") {
-					fs.writeFile("dinoReacted.txt", "true", (err) => {
+					fs.writeFile("src/dinoReacted.txt", "true", (err) => {
 						if (err) throw err;
 					});
-					await dinoAdd(reaction.user.id)
+					await dinoAdd(reaction.user.id);
 				}
 			}
 		}
