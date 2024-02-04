@@ -40,7 +40,7 @@ try {
 		for (const file of functions) {
 			require(`./functions/${file}`)(client);
 		}
-		fs.writeFile("dinoReacted.txt", "true", (err) => {
+		fs.writeFile("./dinoReacted.txt", "true", (err) => {
 			if (err) throw err;
 			console.log(
 				`[${cyanBright("DEBUG")}] ${gray(
@@ -48,7 +48,7 @@ try {
 				)}`
 			);
 		});
-		fs.writeFile("lastDino.txt", "", (err) => {
+		fs.writeFile("./lastDino.txt", "", (err) => {
 			if (err) throw err;
 			console.log(
 				`[${cyanBright("DEBUG")}] ${gray(
