@@ -31,7 +31,7 @@ module.exports = {
 		let total = users.length < 30 ? users.length : 30;
 		let message = "";
 		for (let i = 0; i < total; i++) {
-			let member = interaction.guild.members.cache.get(users[i].userId) || users[i].userid
+			let member = await interaction.message.guild.members.fetch(users[i].userId) || users[i].userid
 			message = `${message}\n\`${i + 1}\`\u205F\u205F|\u205F\u205F**${
 				member
 			}** - ${users[i].score}`;
