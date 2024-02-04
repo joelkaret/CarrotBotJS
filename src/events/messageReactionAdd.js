@@ -2,7 +2,7 @@ require("dotenv").config();
 const fs = require("node:fs");
 
 const clientId = process.env.clientId;
-const leaderboard = require("./schemas/dino-ldb");
+const leaderboard = require("src/schemas/dino-ldb");
 const mongoose = require("mongoose");
 const { cyanBright, gray } = require("colorette");
 

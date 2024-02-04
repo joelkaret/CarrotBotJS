@@ -4,7 +4,7 @@ const axios = require("axios");
 
 module.exports = {
 	data: {
-		name: "refresh",
+		name: "refreshDino",
 	},
 	async execute(interaction, client) {
 		await interaction.reply({
