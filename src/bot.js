@@ -1,6 +1,6 @@
 const fs = require("node:fs");
 const { exec } = require("child_process");
-
+const { cyanBright, gray } = require("colorette");
 const { Client, Collection } = require("discord.js");
 
 const client = new Client({
@@ -42,9 +42,19 @@ try {
 		}
 		fs.writeFile("dinoReacted.txt", "true", (err) => {
 			if (err) throw err;
+			console.log(
+				`[${cyanBright("DEBUG")}] ${gray(
+					"dinoReacted.txt created successfully."
+				)}`
+			);
 		});
 		fs.writeFile("lastDino.txt", "", (err) => {
 			if (err) throw err;
+			console.log(
+				`[${cyanBright("DEBUG")}] ${gray(
+					"lastDino.txt created successfully."
+				)}`
+			);
 		});
 		await client.handleEvents(eventFiles);
 		await client.handleCommands(commandFolders, `./src/commands`);
