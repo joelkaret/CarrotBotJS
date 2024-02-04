@@ -3,6 +3,7 @@ const { EmbedBuilder } = require("discord.js");
 const { ActionRowBuilder, ButtonBuilder } = require("discord.js");
 
 const carrotClubId = "835942211635773472";
+835942211635773472
 require("dotenv").config();
 
 module.exports = {
@@ -10,7 +11,7 @@ module.exports = {
 		.setName("dino-ldb")
 		.setDescription("Create the dino ldb"),
 	async execute(interaction, client) {
-		if (!(interaction.guildId !== carrotClubId)) {
+		if ((interaction.guildId !== carrotClubId)) {
 			console.log(interaction)
 			console.log(interaction.guild)
 			console.log(interaction.guild.id)
