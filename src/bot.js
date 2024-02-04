@@ -40,18 +40,18 @@ try {
 		for (const file of functions) {
 			require(`./functions/${file}`)(client);
 		}
+		fs.writeFile("dinoReacted.txt", "true", (err) => {
+			if (err) throw err;
+		});
+		fs.writeFile("lastDino.txt", "", (err) => {
+			if (err) throw err;
+		});
 		await client.handleEvents(eventFiles);
 		await client.handleCommands(commandFolders, `./src/commands`);
 		await client.handleButtons();
 		await client.handleSchedules();
 		await client.login(process.env.token);
 		await client.dbLogin();
-		new File("", "lastDino.txt", {
-			type: "text/plain",
-		});
-		new File("false", "dinoReacted.txt", {
-			type: "text/plain",
-		});
 	})();
 } catch {
 	exec("kill 1");

@@ -2,8 +2,7 @@ require("dotenv").config();
 const fs = require("node:fs");
 
 const clientId = process.env.clientId;
-const dinoLdbId = "1203495628726870066";
-const leaderboard = require("../../schemas/dino-ldb");
+const leaderboard = require("./schemas/dino-ldb");
 const mongoose = require("mongoose");
 const { cyanBright, gray } = require("colorette");
 
@@ -60,7 +59,7 @@ module.exports = {
 					fs.writeFile("dinoReacted.txt", "true", (err) => {
 						if (err) throw err;
 					});
-					await dinoAdd(reaction.user.id)
+					await dinoAdd(reaction.user.id);
 				}
 			}
 		}
