@@ -11,8 +11,8 @@ module.exports = (client) => {
 		const carrotClub = client.guilds.cache.get(carrotClubId);
 		let channel = carrotClub.channels.cache.find((C) => C.id == channelId);
 		if (channel) {
-			const messageId = await channel.send("Ding Dong!");
-			fs.writeFile("src/lastDino.txt", `${messageId}`, (err) => {
+			const message = await channel.send("Ding Dong!");
+			fs.writeFile("src/lastDino.txt", `${message.id}`, (err) => {
 				if (err) throw err;
 			});
 			fs.writeFile("src/dinoReacted.txt", "false", (err) => {
