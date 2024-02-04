@@ -22,7 +22,7 @@ module.exports = {
 		for (let i = 0; i < users.length; i++) { // Bubble Sort
 			for (let j = 0; j < users.length - i - 1; j++) {
 				if (users[j].score < users[j + 1].score) {
-					let temp = playusersers[j];
+					let temp = users[j];
 					users[j] = users[j + 1];
 					users[j + 1] = temp;
 				}
