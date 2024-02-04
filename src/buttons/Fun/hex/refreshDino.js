@@ -1,6 +1,5 @@
 const leaderboard = require("../../../schemas/dino-ldb");
 const { EmbedBuilder } = require("discord.js");
-const axios = require("axios");
 
 module.exports = {
 	data: {

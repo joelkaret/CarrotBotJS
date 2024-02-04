@@ -1,4 +1,5 @@
 const schedule = require("node-schedule");
+const fs = require("node:fs");
 
 const carrotClubId = "835942211635773472";
 const channelId = "835963832718590023";
