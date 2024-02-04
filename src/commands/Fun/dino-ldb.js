@@ -12,9 +12,6 @@ module.exports = {
 		.setDescription("Create the dino ldb"),
 	async execute(interaction, client) {
 		if ((interaction.guildId !== carrotClubId)) {
-			console.log(interaction)
-			console.log(interaction.guild)
-			console.log(interaction.guild.id)
 			await interaction.reply({
 				content: `${interaction.member} You do not have permssion to do this. (Carrot club OP)`,
 				ephemeral: true,
