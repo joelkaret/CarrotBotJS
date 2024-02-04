@@ -36,6 +36,7 @@ module.exports = {
 				users[i].ign
 			}** - ${users[i].score}`;
 		}
+        tempEmbed.addFields({ name: "Leaderboard", value: message, inline: false });
 		await interaction.message.edit({
 			content: " ",
 			embeds: [tempEmbed],
