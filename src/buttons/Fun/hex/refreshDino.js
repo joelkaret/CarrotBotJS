@@ -1,4 +1,4 @@
-const leaderboard = require("../../../schemas/skillless-bwldb");
+const leaderboard = require("../../../schemas/dino-ldb");
 const { EmbedBuilder } = require("discord.js");
 const axios = require("axios");
 
