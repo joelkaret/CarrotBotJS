@@ -1,5 +1,6 @@
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
+const { cyanBright, gray } = require("colorette");
 const fs = require("fs");
 require("dotenv").config();
 const clientId = process.env.clientId;
@@ -22,7 +23,11 @@ module.exports = (client) => {
 
 		(async () => {
 			try {
-				console.log("Started refreshing application (/) commands.");
+				console.log(
+					`[${cyanBright("DEBUG")}] ${gray(
+						"Started refreshing application (/) commands."
+					)}`
+				);
 
 				// GUILD SLASH COMMANDS: TESTING
 				for (const guildId of guildIds) {
@@ -38,7 +43,11 @@ module.exports = (client) => {
 				// 	{ body: client.commands },
 				// );
 
-				console.log("Successfully reloaded application (/) commands.");
+				console.log(
+					`[${cyanBright("DEBUG")}] ${gray(
+						"Successfully reloaded application (/) commands."
+					)}`
+				);
 			} catch (error) {
 				console.error(error);
 			}

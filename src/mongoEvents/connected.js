@@ -1,6 +1,10 @@
+const { cyanBright, gray } = require("colorette");
+
 module.exports = {
-	name: 'connected',
+	name: "connected",
 	execute() {
-		console.log(`Connected to Database.`);
+		console.log(
+			`[${cyanBright("DEBUG")}] ${gray("Connected to Database.")}`
+		);
 	},
 };

@@ -1,6 +1,8 @@
 module.exports = {
 	name: 'disconnected',
 	execute() {
-		console.log(`Disconnected from Database.`);
+		console.log(
+			`[${cyanBright("DEBUG")}] ${gray("Disconnected from Database.")}`
+		);
 	},
 };

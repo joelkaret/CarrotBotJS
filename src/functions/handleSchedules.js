@@ -15,7 +15,7 @@ module.exports = (client) => {
 					console.log(
 						`[${cyanBright("DEBUG")}] ${gray(
 							"Schedule deployed successfully"
-						)}\n`
+						)}`
 					);
 				} catch (error) {
 					console.log(`[${cyanBright("DEBUG")}] ${gray(error)}\n`);
