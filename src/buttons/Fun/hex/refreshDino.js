@@ -28,11 +28,12 @@ module.exports = {
 				}
 			}
 		}
-		let total = users.length < 30 ? players.length : 30;
+		let total = users.length < 30 ? users.length : 30;
 		let message = "";
 		for (let i = 0; i < total; i++) {
+			let member = interaction.guild.members.cache.get(users[i].userId) || users[i].userid
 			message = `${message}\n\`${i + 1}\`\u205F\u205F|\u205F\u205F**${
-				users[i].ign
+				member
 			}** - ${users[i].score}`;
 		}
         tempEmbed.addFields({ name: "Leaderboard", value: message, inline: false });

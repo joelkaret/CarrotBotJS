@@ -21,7 +21,7 @@ module.exports = {
 				});
 			}
 
-		} else if (interaction.isSelectMenu()) {
+		} else if (interaction.isStringSelectMenu()) {
 			if (interaction.customId.includes('-commandName')) {
 				pass
 				// Code here for select menu

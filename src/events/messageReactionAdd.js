@@ -58,7 +58,7 @@ module.exports = {
 					fs.writeFile("src/dinoReacted.txt", "true", (err) => {
 						if (err) throw err;
 					});
-					await dinoAdd(reaction.user.id);
+					await dinoAdd(user.id);
 				}
 			}
 		}
@@ -101,12 +101,13 @@ module.exports = {
 };
 
 async function dinoAdd(userId) {
+	console.log(userId)
 	let user = await leaderboard.findOne({ userId: userId });
 	if (!user) {
 		user = await new leaderboard({
 			_id: new mongoose.Types.ObjectId(),
 			userId: userId,
-			score: 1,
+			score: 0,
 		});
 		await user.save().catch((err) => console.log(err));
 	}
