@@ -46,6 +46,12 @@ try {
 		await client.handleSchedules();
 		await client.login(process.env.token);
 		await client.dbLogin();
+		new File("", "lastDino.txt", {
+			type: "text/plain",
+		});
+		new File("false", "dinoReacted.txt", {
+			type: "text/plain",
+		});
 	})();
 } catch {
 	exec("kill 1");
