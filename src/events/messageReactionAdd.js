@@ -101,7 +101,6 @@ module.exports = {
 };
 
 async function dinoAdd(userId) {
-	console.log(userId)
 	let user = await leaderboard.findOne({ userId: userId });
 	if (!user) {
 		user = await new leaderboard({
