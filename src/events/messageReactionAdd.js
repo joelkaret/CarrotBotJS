@@ -59,6 +59,7 @@ module.exports = {
 						if (err) throw err;
 					});
 					await dinoAdd(user.id);
+					await reaction.message.edit(`${reaction.message.content} - ${member}`)
 				}
 			}
 		}
