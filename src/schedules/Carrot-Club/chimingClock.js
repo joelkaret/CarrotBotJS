@@ -11,6 +11,23 @@ module.exports = (client) => {
 		const carrotClub = client.guilds.cache.get(carrotClubId);
 		let channel = carrotClub.channels.cache.find((C) => C.id == channelId);
 		if (channel) {
+			let dinoReacted = fs.readFileSync("src/dinoReacted.txt", {
+				encoding: "utf8",
+				flag: "r",
+			});
+			if (dinoReacted === "false") {
+				const lastDinoId = fs.readFileSync("src/lastDino.txt", {
+					encoding: "utf8",
+					flag: "r",
+				});
+				let dinoEmoji = client.emojis.cache.find(emoji => emoji.name === "t_rex");
+				const lastDinoMessage = channel.messages.fetch(lastDinoId)
+				await lastDinoMessage.react(dinoEmoji.id);
+				await lastDinoMessage.edit(`${lastDinoMessage.content} - Carrot Bot Rules all.`);
+				await dinoAdd(client.user.id);
+			}
+
+
 			const message = await channel.send("Ding Dong!");
 			fs.writeFile("src/lastDino.txt", `${message.id}`, (err) => {
 				if (err) throw err;
@@ -21,3 +38,21 @@ module.exports = (client) => {
 		}
 	});
 };
+
+async function dinoAdd(userId) {
+	let user = await leaderboard.findOne({ userId: userId });
+	if (!user) {
+		user = await new leaderboard({
+			_id: new mongoose.Types.ObjectId(),
+			userId: userId,
+			score: 0,
+		});
+		await user.save().catch((err) => console.log(err));
+	}
+
+	await leaderboard.findOneAndUpdate(
+		{ userId: userId },
+		{ score: user.score + 1 }
+	);
+	return user;
+}

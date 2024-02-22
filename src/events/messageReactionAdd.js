@@ -27,9 +27,6 @@ module.exports = {
 		const member = reaction.message.guild.members.cache.get(user.id);
 		if (user.id == clientId) return;
 
-		// "lastDino.txt"
-		// "dinoReacted.txt"
-
 		// Chiming Clock Game:
 
 		const lastDinoId = fs.readFileSync("src/lastDino.txt", {
