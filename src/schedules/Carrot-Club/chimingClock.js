@@ -15,18 +15,34 @@ module.exports = (client) => {
 				encoding: "utf8",
 				flag: "r",
 			});
-			if (dinoReacted === "false") {
-				const lastDinoId = fs.readFileSync("src/lastDino.txt", {
-					encoding: "utf8",
-					flag: "r",
-				});
-				let dinoEmoji = client.emojis.cache.find(emoji => emoji.name === "t_rex");
-				const lastDinoMessage = channel.messages.fetch(lastDinoId)
-				await lastDinoMessage.react(dinoEmoji.id);
-				await lastDinoMessage.edit(`${lastDinoMessage.content} - Carrot Bot Rules all.`);
-				await dinoAdd(client.user.id);
+			const lastDinoId = fs.readFileSync("src/lastDino.txt", {
+				encoding: "utf8",
+				flag: "r",
+			});
+			if (dinoReacted === "false" && lastDinoId !== "") {
+				// let dinoEmoji = client.emojis.cache.find(emoji => emoji.name === "t_rex"); //🦖
+				const lastDinoMessage = await channel.messages.fetch(
+					lastDinoId
+				);
+				if (!lastDinoMessage) {
+					console.log(
+						`[${cyanBright("DEBUG")}] ${gray(
+							"dinoReacted was false, and bot failed to react."
+						)}
+						Last Dino Message ID: ${lastDinoId}
+						Last Dino Message: ${lastDinoMessage}`
+					);
+				}
+				try {
+					await lastDinoMessage.react("🦖");
+					await lastDinoMessage.edit(
+						`${lastDinoMessage.content} - Carrot Bot Rules all.`
+					);
+					await dinoAdd(client.user.id);
+				} catch (err) {
+					console.error(err);
+				}
 			}
-
 
 			const message = await channel.send("Ding Dong!");
 			fs.writeFile("src/lastDino.txt", `${message.id}`, (err) => {
