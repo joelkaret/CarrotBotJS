@@ -1,6 +1,11 @@
 const schedule = require("node-schedule");
 const fs = require("node:fs");
+const { cyanBright, gray } = require("colorette");
 
+const leaderboard = require("../schemas/dino-ldb");
+const mongoose = require("mongoose");
+
+const clientId = process.env.clientId;
 const carrotClubId = "835942211635773472";
 const channelId = "835963832718590023";
 const rule = new schedule.RecurrenceRule();
@@ -38,7 +43,7 @@ module.exports = (client) => {
 					await lastDinoMessage.edit(
 						`${lastDinoMessage.content} - Carrot Bot Rules all.`
 					);
-					await dinoAdd(client.user.id);
+					await dinoAdd(clientId);
 				} catch (err) {
 					console.error(err);
 				}
