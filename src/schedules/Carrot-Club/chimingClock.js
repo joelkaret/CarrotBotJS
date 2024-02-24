@@ -2,7 +2,7 @@ const schedule = require("node-schedule");
 const fs = require("node:fs");
 const { cyanBright, gray } = require("colorette");
 
-const leaderboard = require("../schemas/dino-ldb");
+const leaderboard = require("../../schemas/dino-ldb");
 const mongoose = require("mongoose");
 
 const clientId = process.env.clientId;
