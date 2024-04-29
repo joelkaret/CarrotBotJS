@@ -3,6 +3,19 @@ const { exec } = require("child_process");
 const { cyanBright, gray } = require("colorette");
 const { Client, Collection } = require("discord.js");
 
+const util = require("util");
+const logFile = fs.createWriteStream(
+	`log${new Date().toISOString().split("T", 1)[0]}.txt`,
+	{ flags: "a" }
+);
+const logStdout = process.stdout;
+
+console.log = function () {
+	logFile.write(util.format.apply(null, arguments) + "\n");
+	logStdout.write(util.format.apply(null, arguments) + "\n");
+};
+console.error = console.log;
+
 const client = new Client({
 	intents: [
 		"Guilds",
