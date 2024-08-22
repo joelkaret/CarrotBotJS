@@ -19,7 +19,8 @@ module.exports = {
 			});
 			return;
 		}
-		for (let i = 0; i < users.length; i++) { // Bubble Sort
+		for (let i = 0; i < users.length; i++) {
+			// Bubble Sort
 			for (let j = 0; j < users.length - i - 1; j++) {
 				if (users[j].score < users[j + 1].score) {
 					let temp = users[j];
@@ -31,12 +32,21 @@ module.exports = {
 		let total = users.length < 30 ? users.length : 30;
 		let message = "";
 		for (let i = 0; i < total; i++) {
-			let member = await interaction.message.guild.members.fetch(users[i].userId) || users[i].userid
-			message = `${message}\n\`${i + 1}\`\u205F\u205F|\u205F\u205F**${
-				member
-			}** - ${users[i].score}`;
+			let member =  users[i].userid
+			try {
+				member = await interaction.message.guild.members.fetch(
+					users[i].userId
+				);
+			} catch {}
+			message = `${message}\n\`${
+				i + 1
+			}\`\u205F\u205F|\u205F\u205F**${member}** - ${users[i].score}`;
 		}
-        tempEmbed.addFields({ name: "Leaderboard", value: message, inline: false });
+		tempEmbed.addFields({
+			name: "Leaderboard",
+			value: message,
+			inline: false,
+		});
 		await interaction.message.edit({
 			content: " ",
 			embeds: [tempEmbed],
