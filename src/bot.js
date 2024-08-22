@@ -5,7 +5,7 @@ const { Client, Collection } = require("discord.js");
 
 const util = require("util");
 const logFile = fs.createWriteStream(
-	`log${new Date().toISOString().split("T", 1)[0]}.txt`,
+	`./logs/log${new Date().toISOString().split("T", 1)[0]}.txt`,
 	{ flags: "a" }
 );
 const logStdout = process.stdout;
@@ -21,6 +21,7 @@ const client = new Client({
 		"Guilds",
 		"GuildMembers",
 		"GuildMessages",
+        "MessageContent",,
 		"GuildMessageReactions",
 		"GuildEmojisAndStickers",
 		"GuildVoiceStates",
@@ -77,5 +78,5 @@ try {
 		await client.dbLogin();
 	})();
 } catch {
-	exec("kill 1");
+    console.log("uhoh...")
 }

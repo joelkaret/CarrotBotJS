@@ -1,21 +1,21 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { MessageActionRow, MessageButton } = require("discord.js");
+const { ActionRowBuilder, ButtonBuilder } = require("discord.js");
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("hex")
 		.setDescription("Displays hex colour codes for Discord buttons."),
 	async execute(interaction, client) {
-		const row = new MessageActionRow().addComponents(
-			new MessageButton()
+		const row = new ActionRowBuilder().addComponents(
+			new ButtonBuilder()
 				.setCustomId("primary")
 				.setLabel("Primary")
 				.setStyle("PRIMARY"),
-			new MessageButton()
+			new ButtonBuilder()
 				.setCustomId("success")
 				.setLabel("Success")
 				.setStyle("SUCCESS"),
-			new MessageButton()
+			new ButtonBuilder()
 				.setCustomId("danger")
 				.setLabel("Danger")
 				.setStyle("DANGER")

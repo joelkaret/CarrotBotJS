@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { EmbedBuilder } = require('discord.js');
-const { MessageActionRow, MessageButton } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -45,12 +45,12 @@ module.exports = {
 			await interaction.reply({ content: `${interaction.member} You do not have permssion to do this.`, ephemeral: true })
 			return
 		};
-		const button_row = new MessageActionRow().addComponents(
-			new MessageButton()
+		const button_row = new ActionRowBuilder().addComponents(
+			new ButtonBuilder()
 				.setCustomId('accept')
 				.setLabel('Accept')
 				.setStyle('SUCCESS'),
-			new MessageButton()
+			new ButtonBuilder()
 				.setCustomId('delete')
 				.setLabel('Delete')
 				.setStyle('DANGER')

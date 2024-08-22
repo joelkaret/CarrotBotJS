@@ -11,7 +11,7 @@ module.exports = {
 			ephemeral: true,
 		});
 		const tempEmbed = new EmbedBuilder().setColor("#2C2F33");
-		users = await leaderboard.find({});
+		let users = await leaderboard.find({});
 		if (users.length == 0) {
 			await interaction.editReply({
 				content: `${interaction.member} There is no data for this mode stored.`,
