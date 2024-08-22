@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { ActionRowBuilder, ButtonBuilder } = require("discord.js");
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -10,15 +10,15 @@ module.exports = {
 			new ButtonBuilder()
 				.setCustomId("primary")
 				.setLabel("Primary")
-				.setStyle("PRIMARY"),
+				.setStyle(ButtonStyle.Primary),
 			new ButtonBuilder()
 				.setCustomId("success")
 				.setLabel("Success")
-				.setStyle("SUCCESS"),
+				.setStyle(ButtonStyle.Success),
 			new ButtonBuilder()
 				.setCustomId("danger")
 				.setLabel("Danger")
-				.setStyle("DANGER")
+				.setStyle(ButtonStyle.Danger)
 		);
 		await interaction.reply({
 			content: "Click buttons to get their hex colour code:",
