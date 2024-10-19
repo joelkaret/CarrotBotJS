@@ -70,6 +70,14 @@ try {
 				)}`
 			);
 		});
+        fs.writeFile("src/lastPaintballPlayerCount.txt", "0", (err) => {
+			if (err) throw err;
+			console.log(
+				`[${cyanBright("DEBUG")}] ${gray(
+					"lastPaintballPlayerCount.txt created successfully."
+				)}`
+			);
+		});
 		await client.handleEvents(eventFiles);
 		await client.handleCommands(commandFolders, `./src/commands`);
 		await client.handleButtons();

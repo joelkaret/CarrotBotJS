@@ -5,3 +5,5 @@ node_modules
 .upm
 dinoReacted.txt
 lastDino.txt
+lastPaintballPlayerCount.txt
+logs
