@@ -5,13 +5,13 @@ const clientId = process.env.clientId;
 const leaderboard = require("../schemas/dino-ldb");
 const mongoose = require("mongoose");
 const { cyanBright, gray } = require("colorette");
+const paintballRoleName = "Paintball"
 
 module.exports = {
 	name: "messageReactionAdd",
 	once: false,
 	async execute(reaction, user, client) {
 		if (reaction.partial) {
-			// If the message this reaction belongs to was removed, the fetching might result in an API error which should be handled
 			try {
 				await reaction.fetch();
 			} catch (error) {
@@ -19,7 +19,6 @@ module.exports = {
 					"Something went wrong when fetching the message:",
 					error
 				);
-				// Return as `reaction.message.author` may be undefined/null
 				return;
 			}
 		}
@@ -28,7 +27,6 @@ module.exports = {
 		if (user.id == clientId) return;
 
 		// Chiming Clock Game:
-
 		const lastDinoId = fs.readFileSync("src/lastDino.txt", {
 			encoding: "utf8",
 			flag: "r",
@@ -61,20 +59,32 @@ module.exports = {
 			}
 		}
 
-		if (
-			reaction.emoji.toString() == "🪥" &&
-			String(member.id) == "506884005195677696"
-		) {
-			reaction.message.delete();
-			return;
+		const paintballDataFile = "src/paintballPlayerCountsData.json";
+		let paintballData = {};
+		try {
+			paintballData = JSON.parse(
+				fs.readFileSync(paintballDataFile, {
+					encoding: "utf8",
+					flag: "r",
+				})
+			);
+		} catch (error) {
+			console.error("Error reading file: ", error);
+			paintballData = {
+				lastPaintballPlayerCount: -1,
+				lastPaintballPlayerMessageId: "",
+				lastTimeSeenPb: "Never",
+				lastTimePinged: "Never",
+				maxPbPlayerCount: 0,
+			};
 		}
-		// if (reaction.emoji.toString() == '💼' && String(member.id) == "506884005195677696") {
-		// 	const role = await reaction.message.guild.roles.cache.find(role => role.name === "Public Members");
-		// 	const userId = reaction.message.author.id
-		// 	const member = await reaction.message.guild.members.fetch(userId)
-		// 	member.roles.add(role)
-		// 	return;
-		// };
+		if (reaction.message.id == paintballData.lastPaintballPlayerMessageId) {
+			if (reaction.emoji.toString() == "⚪") {
+				const role = reaction.message.guild.roles.cache.find((r) => r.name === paintballRoleName)
+				member.roles.add(role)
+			}
+		}
+
 		if (reaction.message.channelId != "918550313693245470") return;
 		let emojiList = [
 			client.emojis.cache.find((emoji) => emoji.name === "agree"),

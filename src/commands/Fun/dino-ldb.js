@@ -3,7 +3,6 @@ const { EmbedBuilder } = require("discord.js");
 const { ActionRowBuilder, ButtonBuilder } = require("discord.js");
 
 const carrotClubId = "835942211635773472";
-835942211635773472
 require("dotenv").config();
 
 module.exports = {

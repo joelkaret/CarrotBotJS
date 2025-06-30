@@ -1,5 +1,4 @@
 const fs = require("node:fs");
-const { exec } = require("child_process");
 const { cyanBright, gray } = require("colorette");
 const { Client, Collection } = require("discord.js");
 
@@ -21,7 +20,7 @@ const client = new Client({
 		"Guilds",
 		"GuildMembers",
 		"GuildMessages",
-        "MessageContent",,
+		"MessageContent",
 		"GuildMessageReactions",
 		"GuildEmojisAndStickers",
 		"GuildVoiceStates",
@@ -70,14 +69,46 @@ try {
 				)}`
 			);
 		});
-        fs.writeFile("src/lastPaintballPlayerCount.txt", "0", (err) => {
-			if (err) throw err;
-			console.log(
-				`[${cyanBright("DEBUG")}] ${gray(
-					"lastPaintballPlayerCount.txt created successfully."
-				)}`
+
+		const paintballDataFile = "src/paintballPlayerCountsData.json";
+
+		fs.readFile(paintballDataFile, "utf8", (err, data) => {
+			let pbData;
+
+			if (err || !data.trim()) {
+				pbData = {}; // file missing or empty
+			} else {
+				try {
+					pbData = JSON.parse(data);
+				} catch (e) {
+					console.error(`[ERROR] Failed to parse ${paintballDataFile}:`, e);
+					pbData = {};
+				}
+			}
+
+			const initialized = {
+				lastPaintballPlayerCount: pbData.lastPaintballPlayerCount ?? -1,
+				lastPaintballPlayerMessageId: pbData.lastPaintballPlayerMessageId ?? "",
+				lastTimeSeenPb: pbData.lastTimeSeenPb ?? "Never",
+				lastTimePinged: pbData.lastTimePinged ?? "Never",
+				maxPbPlayerCount: pbData.maxPbPlayerCount ?? -1,
+			};
+
+			fs.writeFile(
+				paintballDataFile,
+				JSON.stringify(initialized, null, 2),
+				(writeErr) => {
+					if (writeErr) throw writeErr;
+
+					console.log(
+						`[${cyanBright("DEBUG")}] ${gray(
+							"paintballPlayerCountsData.json created/initialized with default values."
+						)}`
+					);
+				}
 			);
 		});
+
 		await client.handleEvents(eventFiles);
 		await client.handleCommands(commandFolders, `./src/commands`);
 		await client.handleButtons();
@@ -86,5 +117,5 @@ try {
 		await client.dbLogin();
 	})();
 } catch {
-    console.log("uhoh...")
+	console.log("uhoh...");
 }

@@ -12,7 +12,7 @@ module.exports = {
 		),
 	async execute(interaction, client) {
 		await interaction.reply({ content: `${interaction.member} Working...`, ephemeral: true })
-		if (!String(interaction.member.id) == "506884005195677696"){
+		if (String(interaction.member.id) !== "506884005195677696"){
 			await interaction.editReply({ content: `${interaction.member} You do not have permssion to do this.`, ephemeral: true })
 			return;
 		}
