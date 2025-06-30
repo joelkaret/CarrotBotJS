@@ -2,15 +2,16 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const { EmbedBuilder } = require("discord.js");
 const { ActionRowBuilder, ButtonBuilder } = require("discord.js");
 
-const carrotClubId = "835942211635773472";
 require("dotenv").config();
+const config = require("../../config.js");
+const chimingClockGuildId = config.chimingClock.guildId;
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("dino-ldb")
 		.setDescription("Create the dino ldb"),
 	async execute(interaction, client) {
-		if ((interaction.guildId !== carrotClubId)) {
+		if ((interaction.guildId !== chimingClockGuildId)) {
 			await interaction.reply({
 				content: `${interaction.member} You do not have permssion to do this. (Carrot club OP)`,
 				ephemeral: true,

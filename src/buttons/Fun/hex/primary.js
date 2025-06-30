@@ -1,9 +1,9 @@
 module.exports = {
 	data: {
-		name: 'primary'
+		name: "primary"
 	},
-	async execute (interaction, client) {
+	async execute(interaction, client) {
 		interaction.deferUpdate();
-		await interaction.message.edit({ content: 'Colour Primary: #5865F2'})
+		await interaction.message.edit({ content: "Colour Primary: #5865F2" })
 	}
 }

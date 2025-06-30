@@ -1,5 +1,5 @@
 module.exports = {
-	name: 'err',
+	name: "err",
 	execute(error) {
 		console.log(error);
 	},

@@ -1,6 +1,9 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 require("dotenv").config();
 
+const config = require("../../config.js");
+const botOwner = config.userIds.botOwner;
+
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("purge")
@@ -12,7 +15,7 @@ module.exports = {
 				.setRequired(true)
 		),
 	async execute(interaction, client) {
-		if (interaction.user.id !== "506884005195677696") {
+		if (interaction.user.id !== botOwner) {
 			await interaction.reply({
 				content: `${interaction.member} You do not have permssion to do this.`,
 				ephemeral: true,

@@ -6,15 +6,18 @@ const leaderboard = require("../../schemas/dino-ldb");
 const mongoose = require("mongoose");
 
 const clientId = process.env.clientId;
-const carrotClubId = "835942211635773472";
-const channelId = "835963832718590023";
+
+const config = require("../../config.js");
+const guildId = config.chimingClock.guildId;
+const channelId = config.chimingClock.channelId;
+const emoji = config.chimingClock.emoji;
 const rule = new schedule.RecurrenceRule();
 rule.minute = 0;
 
 module.exports = (client) => {
 	schedule.scheduleJob(rule, async function () {
-		const carrotClub = client.guilds.cache.get(carrotClubId);
-		let channel = carrotClub.channels.cache.find((C) => C.id == channelId);
+		const guild = client.guilds.cache.get(guildId);
+		let channel = guild.channels.cache.find((C) => C.id == channelId);
 		if (channel) {
 			let dinoReacted = fs.readFileSync("src/dinoReacted.txt", {
 				encoding: "utf8",
@@ -25,7 +28,6 @@ module.exports = (client) => {
 				flag: "r",
 			});
 			if (dinoReacted === "false" && lastDinoId !== "") {
-				// let dinoEmoji = client.emojis.cache.find(emoji => emoji.name === "t_rex"); //🦖
 				const lastDinoMessage = await channel.messages.fetch(
 					lastDinoId
 				);
@@ -39,7 +41,7 @@ module.exports = (client) => {
 					);
 				}
 				try {
-					await lastDinoMessage.react("🦖");
+					await lastDinoMessage.react(emoji);
 					await lastDinoMessage.edit(
 						`${lastDinoMessage.content} - Carrot Bot Rules all.`
 					);

@@ -76,7 +76,7 @@ try {
 			let pbData;
 
 			if (err || !data.trim()) {
-				pbData = {}; // file missing or empty
+				pbData = {};
 			} else {
 				try {
 					pbData = JSON.parse(data);

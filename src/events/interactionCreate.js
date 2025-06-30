@@ -1,5 +1,3 @@
-const { CommandInteraction } = require("discord.js");
-
 module.exports = {
 	name: "interactionCreate",
 	once: false,
@@ -23,8 +21,6 @@ module.exports = {
 				}
 			} else if (interaction.isStringSelectMenu()) {
 				if (interaction.customId.includes("-commandName")) {
-					pass;
-					// Code here for select menu
 				}
 			} else if (interaction.isButton()) {
 				const button = client.buttons.get(interaction.customId);

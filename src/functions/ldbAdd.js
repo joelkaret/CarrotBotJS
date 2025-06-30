@@ -1,5 +1,5 @@
-const leaderboard = require('../schemas/skillless-bwldb');
-const mongoose = require('mongoose');
+const leaderboard = require("../schemas/skillless-bwldb");
+const mongoose = require("mongoose");
 
 module.exports = (client) => {
 	client.ldbAdd = async (ign, uuid, winstreak, mode) => {
@@ -13,8 +13,8 @@ module.exports = (client) => {
 				mode: mode,
 			});
 			await leaderboard.save().catch(err => console.log(err));
-		await leaderboard.findOneAndUpdate({ uuid: uuid, mode: mode }, { ign: ign, winstreak: winstreak });
-		return user;
+			await leaderboard.findOneAndUpdate({ uuid: uuid, mode: mode }, { ign: ign, winstreak: winstreak });
+			return user;
 		};
 	};
 };

@@ -5,7 +5,13 @@ const clientId = process.env.clientId;
 const leaderboard = require("../schemas/dino-ldb");
 const mongoose = require("mongoose");
 const { cyanBright, gray } = require("colorette");
-const paintballRoleName = "Paintball"
+const config = require("../config.js");
+const paintballRoleName = config.paintball.roleName;
+const paintballReactionEmoji = config.paintball.reactionEmoji;
+const chimingClockEmoji = config.chimingClock.emoji;
+const paintballDataFile = config.paintball.fileName;
+const chimingClockLastMessageIdFile = config.chimingClock.lastMessageIdFile;
+const chimingClockReactedFile = config.chimingClock.reactedFile;
 
 module.exports = {
 	name: "messageReactionAdd",
@@ -27,12 +33,12 @@ module.exports = {
 		if (user.id == clientId) return;
 
 		// Chiming Clock Game:
-		const lastDinoId = fs.readFileSync("src/lastDino.txt", {
+		const lastDinoId = fs.readFileSync(chimingClockLastMessageIdFile, {
 			encoding: "utf8",
 			flag: "r",
 		});
 		if (reaction.message.id === lastDinoId) {
-			let dinoReacted = fs.readFileSync("src/dinoReacted.txt", {
+			let dinoReacted = fs.readFileSync(chimingClockReactedFile, {
 				encoding: "utf8",
 				flag: "r",
 			});
@@ -49,7 +55,7 @@ module.exports = {
 			}
 
 			if (!dinoReacted) {
-				if (reaction.emoji.toString() == "🦖") {
+				if (reaction.emoji.toString() == chimingClockEmoji) {
 					fs.writeFile("src/dinoReacted.txt", "true", (err) => {
 						if (err) throw err;
 					});
@@ -59,7 +65,7 @@ module.exports = {
 			}
 		}
 
-		const paintballDataFile = "src/paintballPlayerCountsData.json";
+		// Paintball Player Count Role Assignment:
 		let paintballData = {};
 		try {
 			paintballData = JSON.parse(
@@ -78,32 +84,27 @@ module.exports = {
 				maxPbPlayerCount: 0,
 			};
 		}
-		if (reaction.message.id == paintballData.lastPaintballPlayerMessageId) {
-			if (reaction.emoji.toString() == "⚪") {
-				const role = reaction.message.guild.roles.cache.find((r) => r.name === paintballRoleName)
-				member.roles.add(role)
+		if (reaction.message.id === paintballData.lastPaintballPlayerMessageId && reaction.emoji.toString() === paintballReactionEmoji) {
+			let role = reaction.message.guild.roles.cache.find(
+				(r) => r.name === paintballRoleName
+			);
+			if (!role) {
+				try {
+					role = await reaction.message.guild.roles.create({
+						name: paintballRoleName,
+						mentionable: true,
+						reason: "Needed for Paintball Pings",
+					});
+				} catch (err) {
+					console.error("Failed to create role:", err);
+					return;
+				}
 			}
-		}
-
-		if (reaction.message.channelId != "918550313693245470") return;
-		let emojiList = [
-			client.emojis.cache.find((emoji) => emoji.name === "agree"),
-			client.emojis.cache.find((emoji) => emoji.name === "disagree"),
-		];
-		if (!(emojiList.indexOf(reaction.emoji) >= 0)) {
-			reaction.users.remove(user);
-			return;
-		}
-		if (
-			!(
-				member.roles.cache.some(
-					(role) => role.id === "759257487605366795"
-				) ||
-				member.roles.cache.some((role) => role.name === "Guild Staff")
-			)
-		) {
-			reaction.users.remove(user);
-			return;
+			try {
+				await member.roles.add(role);
+			} catch (err) {
+				console.error("Failed to assign role:", err);
+			}
 		}
 	},
 };

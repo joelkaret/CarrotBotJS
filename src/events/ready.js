@@ -1,7 +1,7 @@
 const { cyanBright, gray } = require("colorette");
 
 module.exports = {
-	name: 'ready',
+	name: "ready",
 	once: true,
 	execute(client) {
 		console.log(

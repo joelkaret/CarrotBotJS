@@ -1,6 +1,12 @@
 const leaderboard = require("../../../schemas/skillless-bwldb");
 const { EmbedBuilder } = require("discord.js");
 const axios = require("axios");
+const mongoose = require("mongoose");
+
+
+const config = require("../../../config.js");
+const botOwner = config.userIds.botOwner;
+const leaderboardEditPermissionRoleName = config.bedwarsLeaderboard.roleName;
 
 module.exports = {
 	data: {
@@ -14,10 +20,9 @@ module.exports = {
 		if (
 			!(
 				interaction.member.roles.cache.some(
-					(role) => role.name === "Guild Staff"
+					(role) => role.name === leaderboardEditPermissionRoleName
 				) ||
-				String(interaction.member.id) == "506884005195677696" ||
-				String(interaction.member.id) == "358535242409050113"
+				String(interaction.member.id) == botOwner
 			)
 		) {
 			await interaction.editReply({
@@ -26,9 +31,9 @@ module.exports = {
 			});
 			return;
 		}
-		mode = interaction.message.embeds[0].fields[0].name;
+		const mode = interaction.message.embeds[0].fields[0].name;
 		const tempEmbed = new EmbedBuilder().setColor("#2C2F33");
-		players = await leaderboard.find({ mode: mode });
+		const players = await leaderboard.find({ mode: mode });
 		if (players.length == 0) {
 			await interaction.editReply({
 				content: `${interaction.member} There is no data for this mode stored.`,
@@ -54,9 +59,8 @@ module.exports = {
 		let total = players.length < 10 ? players.length : 10;
 		let message = "";
 		for (let i = 0; i < total; i++) {
-			message = `${message}\n\`${i + 1}\`\u205F\u205F|\u205F\u205F**${
-				players[i].ign
-			}** - ${players[i].winstreak}`;
+			message = `${message}\n\`${i + 1}\`\u205F\u205F|\u205F\u205F**${players[i].ign
+				}** - ${players[i].winstreak}`;
 		}
 		tempEmbed.addFields({ name: mode, value: message, inline: false });
 		await interaction.message.edit({

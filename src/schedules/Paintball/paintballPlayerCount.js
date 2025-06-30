@@ -6,11 +6,15 @@ const {
 const fs = require("node:fs");
 const axios = require("axios");
 const { time, TimestampStyles, roleMention, EmbedBuilder } = require("discord.js");
-const guildId = "1288293666531577988";
-const channelId = "1297000322853765210";
+
+const config = require("../../config.js");
+const guildId = config.paintball.guildId;
+const channelId = config.paintball.channelId;
 const hypixelApiKey = process.env.hypixelApiKey;
-const roleName = "Paintball"
-const numToAlert = 12;
+const roleName = config.paintball.roleName || "Paintball";
+const numToAlert = config.paintball.numToAlert || 12;
+const minutesBetweenAlerts = config.paintball.minutesBetweenAlerts || 30
+const timeBetweenAlertsMs = minutesBetweenAlerts * 60 * 1000;
 
 module.exports = (client) => {
 	const scheduler = new ToadScheduler();
@@ -23,9 +27,19 @@ module.exports = (client) => {
 			const channel = await guild.channels.cache.find(
 				(C) => C.id == channelId
 			);
-			const role = guild.roles.cache.find((r) => r.name === roleName)
-			const rolePing = role ? roleMention(role.id) : "No role, Please make one called 'Paintball'"
-
+			let role = guild.roles.cache.find(r => r.name === roleName);
+			if (!role) {
+				try {
+					role = await guild.roles.create({
+						name: roleName,
+						mentionable: true,
+						reason: `Auto-created role '${roleName}'`
+					});
+				} catch (error) {
+					console.error(`Failed to create role '${roleName}':`, error);
+				}
+			}
+			const rolePing = role ? roleMention(role.id) : "No role, and failed to create. Please make one called 'Paintball'"
 			const data = result.data;
 			const games = data.games;
 			const legacy = games.LEGACY;
@@ -72,7 +86,7 @@ module.exports = (client) => {
 			paintballData.lastPaintballPlayerCount = paintball;
 			const info = `Info: Will ghost ping ${rolePing}
             whenever there are ${numToAlert} players. 
-            Won't ping if already pinged within last 30 minutes.
+            Won't ping if already pinged within last ${minutesBetweenAlerts} minutes.
             React with :white_circle: to receive the role.
             Remove reaction to remove role.`;
 
@@ -110,7 +124,7 @@ module.exports = (client) => {
 					paintballData.lastTimeSeenPb = relativeSinceNow;
 					if (
 						lastTimePinged === "Never" ||
-						timeNow.getTime() - lastTimePinged.getTime() > 1000 * 60 * 30
+						timeNow.getTime() - lastTimePinged.getTime() > timeBetweenAlertsMs
 					) {
 						paintballData.lastTimePinged = timeNow;
 						const ghostPing = await channel.send(rolePing);

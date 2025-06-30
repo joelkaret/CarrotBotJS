@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-mongoose.set('strictQuery', false);
+const mongoose = require("mongoose")
+mongoose.set("strictQuery", false);
 const SBL_Schema = new mongoose.Schema({
 	_id: mongoose.Schema.Types.ObjectId,
 	uuid: String,
@@ -8,4 +8,4 @@ const SBL_Schema = new mongoose.Schema({
 	mode: String,
 });
 
-module.exports = mongoose.model('sbl', SBL_Schema, 'skillless_bw_ldb');
+module.exports = mongoose.model("sbl", SBL_Schema, "skillless_bw_ldb");

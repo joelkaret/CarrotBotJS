@@ -32,15 +32,14 @@ module.exports = {
 		let total = users.length < 30 ? users.length : 30;
 		let message = "";
 		for (let i = 0; i < total; i++) {
-			let member =  users[i].userid
+			let member = users[i].userid
 			try {
 				member = await interaction.message.guild.members.fetch(
 					users[i].userId
 				);
-			} catch {}
-			message = `${message}\n\`${
-				i + 1
-			}\`\u205F\u205F|\u205F\u205F**${member}** - ${users[i].score}`;
+			} catch { }
+			message = `${message}\n\`${i + 1
+				}\`\u205F\u205F|\u205F\u205F**${member}** - ${users[i].score}`;
 		}
 		tempEmbed.addFields({
 			name: "Leaderboard",

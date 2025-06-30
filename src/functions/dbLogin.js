@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const fs = require('fs')
+const fs = require("fs")
 const mongoEventFiles = fs.readdirSync("./src/mongoEvents").filter(file => file.endsWith(".js"));
 
 module.exports = (client) => {
