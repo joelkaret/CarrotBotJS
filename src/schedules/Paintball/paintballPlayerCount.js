@@ -17,6 +17,25 @@ const minutesBetweenAlerts = config.paintball.minutesBetweenAlerts || 30
 const timeBetweenAlertsMs = minutesBetweenAlerts * 60 * 1000;
 
 module.exports = (client) => {
+	const messageIdFile = "src/paintballMessageId.json";
+	let paintballData = {
+		lastCount: -1,
+		lastMessageId: "",
+		lastTimeSeenAbove: "Never",
+		lastPingTime: "Never",
+		maxCount: 0,
+	};
+
+	try {
+		const raw = fs.readFileSync(messageIdFile, { encoding: "utf8", flag: "r" });
+		if (raw && raw.trim()) {
+			const parsed = JSON.parse(raw);
+			paintballData.lastMessageId = parsed.lastPaintballPlayerMessageId || "";
+		}
+	} catch (_) {
+		// If file missing or invalid, ignore; we'll create a new message
+	}
+
 	const scheduler = new ToadScheduler();
 	const task = new AsyncTask("paintballCounts", async () => {
 		try {
@@ -46,35 +65,11 @@ module.exports = (client) => {
 			const legacyModes = legacy.modes;
 			const paintball = Number(legacyModes.PAINTBALL);
 
-			const paintballDataFile = "src/paintballPlayerCountsData.json";
-			let paintballData = {};
-
-			try {
-				paintballData = JSON.parse(
-					fs.readFileSync(paintballDataFile, {
-						encoding: "utf8",
-						flag: "r",
-					})
-				);
-			} catch (error) {
-				console.error("Error reading file: ", error);
-				paintballData = {
-					lastPaintballPlayerCount: -1,
-					lastPaintballPlayerMessageId: "",
-					lastTimeSeenPb: "Never",
-					lastTimePinged: "Never",
-					maxPbPlayerCount: 0,
-				};
-			}
-
-			const lastPaintballPlayerCount = Number(
-				paintballData.lastPaintballPlayerCount
-			);
-			const lastPaintballPlayerMessageId =
-				paintballData.lastPaintballPlayerMessageId;
-			const lastTimeSeenPb = paintballData.lastTimeSeenPb;
-			const maxPbPlayerCount = Number(paintballData.maxPbPlayerCount);
-			let timeSinceLastPing = paintballData.lastTimePinged;
+			const lastPaintballPlayerCount = Number(paintballData.lastCount);
+			const lastPaintballPlayerMessageId = paintballData.lastMessageId;
+			const lastTimeSeenPb = paintballData.lastTimeSeenAbove;
+			const maxPbPlayerCount = Number(paintballData.maxCount);
+			let timeSinceLastPing = paintballData.lastPingTime;
 			if (paintball === lastPaintballPlayerCount) return;
 
 			const pbDifference = paintball - lastPaintballPlayerCount;
@@ -83,7 +78,7 @@ module.exports = (client) => {
 					? `+ ${pbDifference}`
 					: `\\-${pbDifference * -1}`;
 
-			paintballData.lastPaintballPlayerCount = paintball;
+			paintballData.lastCount = paintball;
 			const info = `Info: Will ghost ping ${rolePing}
             whenever there are ${numToAlert} players. 
             Won't ping if already pinged within last ${minutesBetweenAlerts} minutes.
@@ -121,12 +116,12 @@ module.exports = (client) => {
 						inline: false,
 					});
 
-					paintballData.lastTimeSeenPb = relativeSinceNow;
+					paintballData.lastTimeSeenAbove = relativeSinceNow;
 					if (
 						lastTimePinged === "Never" ||
 						timeNow.getTime() - lastTimePinged.getTime() > timeBetweenAlertsMs
 					) {
-						paintballData.lastTimePinged = timeNow;
+						paintballData.lastPingTime = timeNow;
 						const ghostPing = await channel.send(rolePing);
 						await ghostPing.delete();
 						embed.addFields({
@@ -161,7 +156,7 @@ module.exports = (client) => {
 						inline: false,
 					});
 
-					paintballData.maxPbPlayerCount = paintball;
+					paintballData.maxCount = paintball;
 				} else {
 					embed.addFields({
 						name: "Max player count seen:",
@@ -182,18 +177,19 @@ module.exports = (client) => {
 						embeds: [embed],
 						content: info,
 					});
-					paintballData.lastPaintballPlayerMessageId = newMessage.id;
+					paintballData.lastMessageId = newMessage.id;
+					try {
+						fs.writeFileSync(
+							messageIdFile,
+							JSON.stringify({ lastPaintballPlayerMessageId: paintballData.lastMessageId })
+						);
+					} catch (e) {
+						console.error("Failed to persist paintball message id:", e);
+					}
 					newMessage.react(reactionEmoji);
 				}
 			}
 
-			fs.writeFileSync(
-				paintballDataFile,
-				JSON.stringify(paintballData),
-				(err) => {
-					if (err) throw err;
-				}
-			);
 		} catch (error) {
 			console.error(
 				"Error fetching data or processing paintball counts: ",
