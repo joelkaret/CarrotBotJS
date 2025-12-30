@@ -1,9 +1,0 @@
-const mongoose = require("mongoose");
-mongoose.set("strictQuery", false);
-const dinoLdb_Schema = new mongoose.Schema({
-	_id: mongoose.Schema.Types.ObjectId,
-	userId: String,
-	score: Number,
-});
-
-module.exports = mongoose.model("carrot_dino_ldb", dinoLdb_Schema, "dino_ldb");
