@@ -2,6 +2,10 @@
 
 CarrotBotJS is a Discord bot built with Node.js and `discord.js`. It powers a mix of fun utilities, admin helpers, scheduled events, and integrations with MongoDB and the Hypixel API.
 
+It is a personal bot consisting of features meant for me and friends - but could be useful for others.
+It has a Hypixel Paintball discord pinger when player counts reach a certain level.
+It has a Hypixel Bedwars winstreak leaderboard system (for the Skillless Guild).
+
 ## Overview
 
 -   Bot commands organized by category (Admin, Fun, Skillless-Leaderboard)
