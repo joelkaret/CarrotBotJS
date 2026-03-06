@@ -1,9 +1,9 @@
-import leaderboard from "../../../schemas/skillless-bwldb";
+import leaderboard from "../../../schemas/skillless-bwldb.js";
 import { EmbedBuilder, GuildMember } from "discord.js";
 import type { ButtonInteraction, Client, Role } from "discord.js";
 import axios from "axios";
 import mongoose from "mongoose";
-import config from "../../../config";
+import config from "../../../config.js";
 const botOwner = config.userIds.botOwner;
 const leaderboardEditPermissionRoleName = config.bedwarsLeaderboard.roleName;
 

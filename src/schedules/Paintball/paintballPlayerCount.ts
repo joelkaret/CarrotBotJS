@@ -10,7 +10,7 @@ import {
 	TextChannel,
 } from "discord.js";
 
-import config from "../../config";
+import config from "../../config.js";
 import type { HypixelCountsResponse, PaintballData } from "../../types/bot.js";
 
 const guildId = config.paintball.guildId;

@@ -9,7 +9,7 @@ import type {
 import type { PaintballData } from "../types/bot.js";
 
 const clientId = process.env.clientId;
-import config from "../config";
+import config from "../config.js";
 const paintballRoleName = config.paintball.roleName;
 const paintballReactionEmoji = config.paintball.reactionEmoji;
 const paintballDataFile = config.paintball.fileName;

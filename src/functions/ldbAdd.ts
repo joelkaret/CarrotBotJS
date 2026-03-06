@@ -1,4 +1,4 @@
-import leaderboard from "../schemas/skillless-bwldb";
+import leaderboard from "../schemas/skillless-bwldb.js";
 import mongoose from "mongoose";
 import type { Client } from "discord.js";
 

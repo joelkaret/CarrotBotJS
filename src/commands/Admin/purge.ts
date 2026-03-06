@@ -6,7 +6,7 @@ import type {
 } from "discord.js";
 import "dotenv/config";
 
-import config from "../../config";
+import config from "../../config.js";
 const botOwner = config.userIds.botOwner;
 
 export default {

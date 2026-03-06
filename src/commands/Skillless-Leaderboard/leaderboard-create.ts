@@ -3,7 +3,7 @@ import { EmbedBuilder, ButtonStyle } from "discord.js";
 import { ActionRowBuilder, ButtonBuilder, GuildMember } from "discord.js";
 import type { ChatInputCommandInteraction, Client, Role } from "discord.js";
 import "dotenv/config";
-import config from "../../config";
+import config from "../../config.js";
 const leaderboardEditPermissionRoleName = config.bedwarsLeaderboard.roleName;
 const botOwner = config.userIds.botOwner;
 
