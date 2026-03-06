@@ -9,9 +9,9 @@ import {
 } from "discord.js";
 import type { SlashCommandBuilder } from "@discordjs/builders";
 import "dotenv/config";
-import config from "./config.js";
-import type { CommandData, ButtonData } from "./types/bot.js";
-import * as functions from "./functions/index.js";
+import config from "./config";
+import type { CommandData, ButtonData } from "./types/bot";
+import * as functions from "./functions/index";
 
 // Extend Client type to include custom properties
 declare module "discord.js" {

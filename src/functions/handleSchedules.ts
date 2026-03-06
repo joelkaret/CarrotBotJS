@@ -1,6 +1,6 @@
 import { cyanBright, gray } from "colorette";
 import type { Client } from "discord.js";
-import * as schedules from "../schedules/index.js";
+import * as schedules from "../schedules/index";
 
 export default (client: Client) => {
 	client.handleSchedules = () => {

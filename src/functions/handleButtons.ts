@@ -1,6 +1,6 @@
 import type { Client } from "discord.js";
-import type { ButtonData } from "../types/bot.js";
-import * as buttons from "../buttons/index.js";
+import type { ButtonData } from "../types/bot";
+import * as buttons from "../buttons/index";
 
 export default (client: Client) => {
 	client.handleButtons = () => {

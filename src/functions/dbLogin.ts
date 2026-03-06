@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 import type { Connection } from "mongoose";
 import type { Client } from "discord.js";
-import type { MongoEventData } from "../types/bot.js";
-import * as mongoEvents from "../mongoEvents/index.js";
+import type { MongoEventData } from "../types/bot";
+import * as mongoEvents from "../mongoEvents/index";
 
 export default (client: Client) => {
 	client.dbLogin = async () => {

@@ -1,6 +1,6 @@
 import type { Client } from "discord.js";
-import type { EventData } from "../types/bot.js";
-import * as events from "../events/index.js";
+import type { EventData } from "../types/bot";
+import * as events from "../events/index";
 
 export default (client: Client) => {
 	client.handleEvents = () => {

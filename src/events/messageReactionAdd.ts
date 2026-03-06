@@ -6,10 +6,10 @@ import type {
 	Client,
 	PartialMessageReaction,
 } from "discord.js";
-import type { PaintballData } from "../types/bot.js";
+import type { PaintballData } from "../types/bot";
 
 const clientId = process.env.clientId;
-import config from "../config.js";
+import config from "../config";
 const paintballRoleName = config.paintball.roleName;
 const paintballReactionEmoji = config.paintball.reactionEmoji;
 const paintballDataFile = config.paintball.fileName;

@@ -3,10 +3,10 @@ import type { ChatInputCommandInteraction, Client, Role } from "discord.js";
 import { GuildMember } from "discord.js";
 import "dotenv/config";
 import axios from "axios";
-import leaderboard from "../../schemas/skillless-bwldb.js";
+import leaderboard from "../../schemas/skillless-bwldb";
 import mongoose from "mongoose";
-import config from "../../config.js";
-import type { MojangProfileResponse } from "../../types/bot.js";
+import config from "../../config";
+import type { MojangProfileResponse } from "../../types/bot";
 const leaderboardEditPermissionRoleName = config.bedwarsLeaderboard.roleName;
 const botOwner = config.userIds.botOwner;
 

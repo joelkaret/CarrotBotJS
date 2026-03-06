@@ -2,8 +2,8 @@ import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
 import { cyanBright, gray } from "colorette";
 import type { Client } from "discord.js";
-import type { CommandData } from "../types/bot.js";
-import * as commands from "../commands/index.js";
+import type { CommandData } from "../types/bot";
+import * as commands from "../commands/index";
 import "dotenv/config";
 
 const clientId = process.env.clientId!;

@@ -2,7 +2,7 @@ import { SlashCommandBuilder } from "@discordjs/builders";
 import type { ChatInputCommandInteraction, Client } from "discord.js";
 import { GuildMember } from "discord.js";
 
-import config from "../../config.js";
+import config from "../../config";
 const botOwner = config.userIds.botOwner;
 
 export default {
