@@ -38,7 +38,7 @@ export default {
 		const member = reaction.message.guild.members.cache.get(user.id);
 		if (user.id == clientId) return;
 
-		const paintballDataFile = "src/paintballPlayerCountsData.json";
+		const paintballDataFile = "paintballPlayerCountsData.json";
 		let paintballData: Partial<PaintballData> = {};
 		try {
 			paintballData = JSON.parse(

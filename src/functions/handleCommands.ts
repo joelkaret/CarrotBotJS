@@ -1,28 +1,21 @@
 import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
 import { cyanBright, gray } from "colorette";
-import fs from "fs";
 import type { Client } from "discord.js";
 import type { CommandData } from "../types/bot.js";
+import * as commands from "../commands/index.js";
 import "dotenv/config";
+
 const clientId = process.env.clientId!;
 const guildIds = process.env.guildIds!.split(", ");
 
 export default (client: Client) => {
-	client.handleCommands = async (commandFolders: string[], path: string) => {
+	client.handleCommands = () => {
 		client.commandArray = [];
-		for (const folder of commandFolders) {
-			const commandFiles = fs
-				.readdirSync(`${path}/${folder}`)
-				.filter((file) => file.endsWith(".ts"));
-			for (const file of commandFiles) {
-				const commandModule = (await import(
-					`../commands/${folder}/${file}`
-				)) as { default: CommandData };
-				const command = commandModule.default;
-				client.commands.set(command.data.name, command);
-				client.commandArray.push(command.data.toJSON());
-			}
+
+		for (const command of Object.values(commands) as CommandData[]) {
+			client.commands.set(command.data.name, command);
+			client.commandArray.push(command.data.toJSON());
 		}
 
 		if (!process.env.token) {

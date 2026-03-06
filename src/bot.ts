@@ -11,6 +11,7 @@ import type { SlashCommandBuilder } from "@discordjs/builders";
 import "dotenv/config";
 import config from "./config.js";
 import type { CommandData, ButtonData } from "./types/bot.js";
+import * as functions from "./functions/index.js";
 
 // Extend Client type to include custom properties
 declare module "discord.js" {
@@ -18,13 +19,10 @@ declare module "discord.js" {
 		commands: Collection<string, CommandData>;
 		buttons: Collection<string, ButtonData>;
 		commandArray: ReturnType<SlashCommandBuilder["toJSON"]>[];
-		handleEvents: (eventFiles: string[]) => Promise<void>;
-		handleCommands: (
-			commandFolders: string[],
-			path: string
-		) => Promise<void>;
-		handleButtons: () => Promise<void>;
-		handleSchedules: () => Promise<void>;
+		handleEvents: () => void;
+		handleCommands: () => void;
+		handleButtons: () => void;
+		handleSchedules: () => void;
 		dbLogin: () => Promise<void>;
 		ldbAdd: (
 			ign: string,
@@ -60,28 +58,15 @@ const client = new Client({
 client.commands = new Collection();
 client.buttons = new Collection();
 
-const functions = fs
-	.readdirSync("./src/functions")
-	.filter((file) => file.endsWith(".ts"));
-
-const eventFiles = fs
-	.readdirSync("./src/events")
-	.filter((file) => file.endsWith(".ts"));
-
-const commandFolders = fs.readdirSync("./src/commands");
-
 try {
 	void (async () => {
 		// Load function handlers
-		for (const file of functions) {
-			const module = (await import(`./functions/${file}`)) as {
-				default: (client: Client) => void | Promise<void>;
-			};
-			await module.default(client);
+		for (const handler of Object.values(functions)) {
+			handler(client);
 		}
 
 		// Initialize paintballMessageId.json if it doesn't exist or is invalid
-		const paintballMessageIdFile = "src/paintballMessageId.json";
+		const paintballMessageIdFile = "paintballMessageId.json";
 		fs.readFile(paintballMessageIdFile, "utf8", (err, data) => {
 			let msgId = "";
 			if (!err && data && data.trim()) {
@@ -116,10 +101,10 @@ try {
 			);
 		});
 
-		await client.handleEvents(eventFiles);
-		await client.handleCommands(commandFolders, `./src/commands`);
-		await client.handleButtons();
-		await client.handleSchedules();
+		client.handleEvents();
+		client.handleCommands();
+		client.handleButtons();
+		client.handleSchedules();
 		await client.login(process.env.token);
 		await client.dbLogin();
 	})();

@@ -1,13 +1,10 @@
 import type { Client } from "discord.js";
 import type { EventData } from "../types/bot.js";
+import * as events from "../events/index.js";
 
 export default (client: Client) => {
-	client.handleEvents = async (eventFiles: string[]) => {
-		for (const file of eventFiles) {
-			const eventModule = (await import(`../events/${file}`)) as {
-				default: EventData;
-			};
-			const event = eventModule.default;
+	client.handleEvents = () => {
+		for (const event of Object.values(events) as EventData[]) {
 			if (event.once) {
 				client.once(event.name, (...args: unknown[]) =>
 					event.execute(...args, client)

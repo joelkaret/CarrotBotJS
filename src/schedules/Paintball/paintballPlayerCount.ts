@@ -12,6 +12,7 @@ import {
 
 import config from "../../config";
 import type { HypixelCountsResponse, PaintballData } from "../../types/bot.js";
+
 const guildId = config.paintball.guildId;
 const channelId = config.paintball.channelId;
 const hypixelApiKey = process.env.hypixelApiKey;
@@ -21,7 +22,7 @@ const minutesBetweenAlerts = config.paintball.minutesBetweenAlerts || 30;
 const timeBetweenAlertsMs = minutesBetweenAlerts * 60 * 1000;
 
 export default (client: Client) => {
-	const messageIdFile = "src/paintballMessageId.json";
+	const messageIdFile = "paintballMessageId.json";
 	const paintballData: {
 		lastCount: number;
 		lastMessageId: string;

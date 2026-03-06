@@ -3,7 +3,7 @@ const CARROT_CLUB_PAINTBALL_CHANNEL_ID = "1388992189941682256";
 
 const PAINTBALL_ROLE_NAME = "Paintball";
 const PAINTBALL_NUM_TO_ALERT = 12;
-const PAINTBALL_FILE = "src/paintballPlayerCountsData.json";
+const PAINTBALL_FILE = "paintballPlayerCountsData.json";
 const PAINTBALL_MINUTES_BETWEEN_ALERTS = 30;
 
 const SKILLESS_GUILD_ID = "713646548436910116";

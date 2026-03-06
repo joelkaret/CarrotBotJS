@@ -1,19 +1,12 @@
 import mongoose from "mongoose";
 import type { Connection } from "mongoose";
-import fs from "fs";
 import type { Client } from "discord.js";
 import type { MongoEventData } from "../types/bot.js";
-const mongoEventFiles = fs
-	.readdirSync("./src/mongoEvents")
-	.filter((file) => file.endsWith(".ts"));
+import * as mongoEvents from "../mongoEvents/index.js";
 
 export default (client: Client) => {
 	client.dbLogin = async () => {
-		for (const file of mongoEventFiles) {
-			const eventModule = (await import(`../mongoEvents/${file}`)) as {
-				default: MongoEventData;
-			};
-			const event = eventModule.default;
+		for (const event of Object.values(mongoEvents) as MongoEventData[]) {
 			const connection = mongoose.connection as unknown as Connection & {
 				once: (
 					event: string,
