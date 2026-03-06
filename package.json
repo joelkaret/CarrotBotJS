@@ -1,16 +1,25 @@
 {
+  "type": "module",
   "scripts": {
-    "start": "node src/bot.js"
+    "dev": "tsx watch src/bot.ts",
+    "build": "tsc",
+    "start": "node dist/bot.js",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\"",
+    "type-check": "tsc --noEmit",
+    "prepare": "husky"
   },
   "name": "carrotbot",
   "version": "1.0.0",
-  "main": "src/bot.js",
+  "main": "dist/bot.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/joelkaret/CarrotBotJS.git"
   },
   "bin": {
-    "carrotbot": "./src/bot.js"
+    "carrotbot": "./dist/bot.js"
   },
   "keywords": [],
   "author": "Joel Karet",
@@ -33,6 +42,25 @@
     "node-schedule": "^2.1.1",
     "python": "^0.0.4",
     "toad-scheduler": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "@types/node-schedule": "^2.1.5",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "husky": "^9.0.6",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.2.4",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "description": ""
 }
