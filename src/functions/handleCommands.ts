@@ -1,6 +1,6 @@
 import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
-import { cyanBright, gray } from "colorette";
+import log from "../utils/logger";
 import type { Client } from "discord.js";
 import type { CommandData } from "../types/bot";
 import * as commands from "../commands/index";
@@ -28,11 +28,7 @@ export default (client: Client) => {
 
 		void (async () => {
 			try {
-				console.log(
-					`[${cyanBright("DEBUG")}] ${gray(
-						"Started refreshing application (/) commands."
-					)}`
-				);
+				log.debug("Started refreshing application slash (/) commands.");
 
 				// GUILD SLASH COMMANDS: TESTING
 				for (const guildId of guildIds) {
@@ -42,7 +38,10 @@ export default (client: Client) => {
 							{ body: client.commandArray }
 						);
 					} catch (error) {
-						console.log(error);
+						log.error(
+							"Error registering commands for guild:",
+							error
+						);
 					}
 				}
 
@@ -52,13 +51,14 @@ export default (client: Client) => {
 				// 	{ body: client.commands },
 				// );
 
-				console.log(
-					`[${cyanBright("DEBUG")}] ${gray(
-						"Successfully reloaded application (/) commands."
-					)}`
+				log.debug(
+					"Successfully reloaded application slash (/) commands."
 				);
 			} catch (error) {
-				console.error(error);
+				log.error(
+					"Error reloading application slash (/) commands:",
+					error
+				);
 			}
 		})();
 	};

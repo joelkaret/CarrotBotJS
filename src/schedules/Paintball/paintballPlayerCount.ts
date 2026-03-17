@@ -9,6 +9,7 @@ import {
 	Client,
 	TextChannel,
 } from "discord.js";
+import log from "../../utils/logger";
 
 import config from "../../config";
 import type { HypixelCountsResponse, PaintballData } from "../../types/bot";
@@ -135,9 +136,10 @@ export default (client: Client) => {
 				await message.react(reactionEmoji);
 			}
 		} catch (error) {
-			console.warn(
+			log.warn(
 				"Either no lastMessageId or failed to fetch message, sending new message"
 			);
+			log.error("Message update error details:", error);
 			const newMessage = await channel.send({
 				embeds: [embed],
 				content: info,
@@ -152,7 +154,7 @@ export default (client: Client) => {
 					})
 				);
 			} catch (e) {
-				console.error("Failed to persist paintball message id:", e);
+				log.error("Failed to persist paintball message id:", e);
 			}
 			void newMessage.react(reactionEmoji);
 		}
@@ -191,7 +193,7 @@ export default (client: Client) => {
 					reason: `Auto-created role '${roleName}'`,
 				});
 			} catch (error) {
-				console.error(`Failed to create role '${roleName}':`, error);
+				log.error(`Failed to create role '${roleName}':`, error);
 			}
 		}
 
@@ -210,6 +212,11 @@ export default (client: Client) => {
 			const response = await axios.get(uri);
 			const hypixelData = response.data as HypixelCountsResponse;
 			const paintball = Number(hypixelData.games.LEGACY.modes.PAINTBALL);
+
+			// Log API recovery if it was previously unavailable
+			if (paintballData.lastCount === API_UNAVAILABLE) {
+				log.info("Hypixel API recovered");
+			}
 
 			// Skip update if count hasn't changed
 			if (paintball === paintballData.lastCount) return;
@@ -256,7 +263,7 @@ export default (client: Client) => {
 					// If API was already unavailable, don't spam message updates
 					if (paintballData.lastCount === API_UNAVAILABLE) return;
 
-					console.warn(
+					log.warn(
 						`Hypixel API temporarily unreachable (${code}). Updating embed.`
 					);
 
@@ -267,8 +274,8 @@ export default (client: Client) => {
 				}
 			}
 			// Log full error for unexpected issues
-			console.error(
-				"Error fetching data or processing paintball counts: ",
+			log.error(
+				"Error fetching data or processing paintball counts:",
 				error
 			);
 		}
