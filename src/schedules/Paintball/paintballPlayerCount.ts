@@ -135,7 +135,9 @@ export default (client: Client) => {
 				await message.react(reactionEmoji);
 			}
 		} catch (error) {
-			console.error("Error editing message: ", error);
+			console.warn(
+				"Either no lastMessageId or failed to fetch message, sending new message"
+			);
 			const newMessage = await channel.send({
 				embeds: [embed],
 				content: info,
