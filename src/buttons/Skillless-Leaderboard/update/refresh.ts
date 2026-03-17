@@ -3,6 +3,7 @@ import { EmbedBuilder, GuildMember } from "discord.js";
 import type { ButtonInteraction, Client, Role } from "discord.js";
 import axios from "axios";
 import mongoose from "mongoose";
+import log from "../../../utils/logger";
 import config from "../../../config";
 const botOwner = config.userIds.botOwner;
 const leaderboardEditPermissionRoleName = config.bedwarsLeaderboard.roleName;
@@ -87,7 +88,9 @@ async function ldbAdd(
 			winstreak: winstreak,
 			mode: mode,
 		});
-		await user.save().catch((err) => console.log(err));
+		await user
+			.save()
+			.catch((err) => log.error("Failed to save leaderboard user:", err));
 	}
 	await leaderboard.findOneAndUpdate(
 		{ uuid: uuid, mode: mode },

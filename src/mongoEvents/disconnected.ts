@@ -1,10 +1,8 @@
-import { cyanBright, gray } from "colorette";
+import log from "../utils/logger";
 
 export default {
 	name: "disconnected",
 	execute() {
-		console.log(
-			`[${cyanBright("DEBUG")}] ${gray("Disconnected from Database.")}`
-		);
+		log.debug("Disconnected from Database.");
 	},
 };

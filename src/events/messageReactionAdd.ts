@@ -7,6 +7,7 @@ import type {
 	PartialMessageReaction,
 } from "discord.js";
 import type { PaintballData } from "../types/bot";
+import log from "../utils/logger";
 
 const clientId = process.env.clientId;
 import config from "../config";
@@ -26,7 +27,7 @@ export default {
 			try {
 				await reaction.fetch();
 			} catch (error) {
-				console.error(
+				log.error(
 					"Something went wrong when fetching the message:",
 					error
 				);
@@ -49,7 +50,7 @@ export default {
 				})
 			) as Partial<PaintballData>;
 		} catch (error) {
-			console.error("Error reading file: ", error);
+			log.error("Error reading file:", error);
 			paintballData = {
 				lastCount: -1,
 				lastMessageId: "",
@@ -74,7 +75,7 @@ export default {
 						reason: "Needed for Paintball Pings",
 					});
 				} catch (err) {
-					console.error("Failed to create role:", err);
+					log.error("Failed to create role:", err);
 					return;
 				}
 			}
@@ -82,7 +83,7 @@ export default {
 			try {
 				await member.roles.add(role);
 			} catch (err) {
-				console.error("Failed to assign role:", err);
+				log.error("Failed to assign role:", err);
 			}
 		}
 	},

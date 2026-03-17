@@ -1,5 +1,4 @@
 import fs from "node:fs";
-import { cyanBright, gray } from "colorette";
 import {
 	Client,
 	Collection,
@@ -10,6 +9,7 @@ import {
 import type { SlashCommandBuilder } from "@discordjs/builders";
 import "dotenv/config";
 import config from "./config";
+import log from "./utils/logger";
 import type { CommandData, ButtonData } from "./types/bot";
 import * as functions from "./functions/index";
 
@@ -76,10 +76,7 @@ try {
 					};
 					msgId = parsed.lastPaintballPlayerMessageId ?? "";
 				} catch (e) {
-					console.error(
-						`[ERROR] Failed to parse ${paintballMessageIdFile}:`,
-						e
-					);
+					log.error(`Failed to parse ${paintballMessageIdFile}:`, e);
 				}
 			}
 
@@ -92,11 +89,7 @@ try {
 				),
 				(writeErr) => {
 					if (writeErr) throw writeErr;
-					console.log(
-						`[${cyanBright("DEBUG")}] ${gray(
-							"paintballMessageId.json created/initialized."
-						)}`
-					);
+					log.debug("paintballMessageId.json created/initialized.");
 				}
 			);
 		});
@@ -108,6 +101,6 @@ try {
 		await client.login(process.env.token);
 		await client.dbLogin();
 	})();
-} catch {
-	console.log("uhoh...");
+} catch (error) {
+	log.error("Fatal error during bot initialization:", error);
 }

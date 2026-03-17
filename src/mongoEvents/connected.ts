@@ -1,10 +1,8 @@
-import { cyanBright, gray } from "colorette";
+import log from "../utils/logger";
 
 export default {
 	name: "connected",
 	execute() {
-		console.log(
-			`[${cyanBright("DEBUG")}] ${gray("Connected to Database.")}`
-		);
+		log.debug("Connected to Database.");
 	},
 };

@@ -1,5 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { EmbedBuilder, ChatInputCommandInteraction } from "discord.js";
+import log from "../../utils/logger";
 
 export default {
 	data: new SlashCommandBuilder()
@@ -40,7 +41,9 @@ export default {
 		} else {
 			await interaction
 				.reply({ content: avatarUrl, ephemeral: false })
-				.catch(console.error);
+				.catch((err) =>
+					log.error("Failed to reply with avatar URL:", err)
+				);
 		}
 	},
 };

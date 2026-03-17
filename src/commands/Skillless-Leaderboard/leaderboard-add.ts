@@ -6,6 +6,7 @@ import axios from "axios";
 import leaderboard from "../../schemas/skillless-bwldb";
 import mongoose from "mongoose";
 import config from "../../config";
+import log from "../../utils/logger";
 import type { MojangProfileResponse } from "../../types/bot";
 const leaderboardEditPermissionRoleName = config.bedwarsLeaderboard.roleName;
 const botOwner = config.userIds.botOwner;
@@ -116,7 +117,9 @@ async function ldbAdd(
 			winstreak: winstreak,
 			mode: mode,
 		});
-		await user.save().catch((err) => console.log(err));
+		await user
+			.save()
+			.catch((err) => log.error("Failed to save leaderboard user:", err));
 	}
 	await leaderboard.findOneAndUpdate(
 		{ uuid: uuid, mode: mode },

@@ -7,11 +7,13 @@ import type {
 	PartialMessageReaction,
 } from "discord.js";
 import type { PaintballData } from "../types/bot";
+import log from "../utils/logger";
 
 const clientId = process.env.clientId;
 import config from "../config";
 const paintballRoleName = config.paintball.roleName;
 const paintballReactionEmoji = config.paintball.reactionEmoji;
+const paintballDataFile = config.paintball.fileName;
 
 export default {
 	name: "messageReactionRemove",
@@ -25,7 +27,7 @@ export default {
 			try {
 				await reaction.fetch();
 			} catch (error) {
-				console.error(
+				log.error(
 					"Something went wrong when fetching the message:",
 					error
 				);
@@ -38,7 +40,6 @@ export default {
 		const member = reaction.message.guild.members.cache.get(user.id);
 		if (user.id == clientId) return;
 
-		const paintballDataFile = "paintballPlayerCountsData.json";
 		let paintballData: Partial<PaintballData> = {};
 		try {
 			paintballData = JSON.parse(
@@ -48,7 +49,7 @@ export default {
 				})
 			) as Partial<PaintballData>;
 		} catch (error) {
-			console.error("Error reading file: ", error);
+			log.error("Error reading file:", error);
 			paintballData = {
 				lastCount: -1,
 				lastMessageId: "",

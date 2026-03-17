@@ -1,4 +1,4 @@
-import { cyanBright, gray } from "colorette";
+import log from "../utils/logger";
 import type { Client } from "discord.js";
 import * as schedules from "../schedules/index";
 
@@ -9,15 +9,9 @@ export default (client: Client) => {
 		>) {
 			try {
 				schedule(client);
-				console.log(
-					`[${cyanBright("DEBUG")}] ${gray(
-						"Schedule deployed successfully"
-					)}`
-				);
+				log.debug("Schedule deployed successfully");
 			} catch (error) {
-				console.log(
-					`[${cyanBright("DEBUG")}] ${gray(String(error))}\n`
-				);
+				log.error("Schedule deployment error:", error);
 			}
 		}
 	};

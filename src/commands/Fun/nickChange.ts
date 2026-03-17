@@ -1,6 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import type { ChatInputCommandInteraction, Client } from "discord.js";
 import { GuildMember } from "discord.js";
+import log from "../../utils/logger";
 
 import config from "../../config";
 const botOwner = config.userIds.botOwner;
@@ -33,7 +34,8 @@ export default {
 		const members = await interaction.guild.members.fetch();
 		for (const user of members) {
 			if (user[0] != botOwner) {
-				console.log(await user[1].setNickname(nick));
+				log.debug("Setting nickname for user: " + user[0]);
+				await user[1].setNickname(nick);
 			}
 		}
 		await interaction.editReply({

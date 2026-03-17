@@ -1,4 +1,5 @@
 import type { Interaction, Client } from "discord.js";
+import log from "../utils/logger";
 
 export default {
 	name: "interactionCreate",
@@ -15,7 +16,7 @@ export default {
 				try {
 					await command.execute(interaction, client);
 				} catch (err) {
-					if (err) console.error(err);
+					if (err) log.error("Command execution error:", err);
 					await interaction.reply({
 						content: "An error has occured with this command.",
 						ephemeral: true,
@@ -29,7 +30,7 @@ export default {
 				try {
 					await button.execute(interaction);
 				} catch (err) {
-					if (err) console.error(err);
+					if (err) log.error("Button execution error:", err);
 					await interaction.reply({
 						content: "An error has occured with this button.",
 						ephemeral: true,
@@ -37,7 +38,7 @@ export default {
 				}
 			}
 		} catch (err) {
-			if (err) console.error(err);
+			if (err) log.error("Interaction error:", err);
 		}
 	},
 };

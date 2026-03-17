@@ -1,6 +1,7 @@
 import leaderboard from "../schemas/skillless-bwldb";
 import mongoose from "mongoose";
 import type { Client } from "discord.js";
+import log from "../utils/logger";
 
 export default (client: Client) => {
 	client.ldbAdd = async (
@@ -18,7 +19,11 @@ export default (client: Client) => {
 				winstreak: winstreak,
 				mode: mode,
 			});
-			await user.save().catch((err) => console.log(err));
+			await user
+				.save()
+				.catch((err) =>
+					log.error("Failed to save leaderboard user:", err)
+				);
 			await leaderboard.findOneAndUpdate(
 				{ uuid: uuid, mode: mode },
 				{ ign: ign, winstreak: winstreak }
