@@ -1,6 +1,7 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig({
+	external: ["undici"],
 	entry: ["src/bot.ts"],
 	format: ["esm"],
 	clean: true,
