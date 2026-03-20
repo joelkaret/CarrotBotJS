@@ -13,6 +13,7 @@ import log from "../../utils/logger";
 
 import config from "../../config";
 import type { HypixelCountsResponse, PaintballData } from "../../types/bot";
+import { errors } from "undici";
 
 const guildId = config.paintball.guildId;
 const channelId = config.paintball.channelId;
@@ -136,6 +137,16 @@ export default (client: Client) => {
 				await message.react(reactionEmoji);
 			}
 		} catch (error) {
+			if (
+				error instanceof errors.ConnectTimeoutError &&
+				error.code === "UND_ERR_CONNECT_TIMEOUT"
+			) {
+				log.warn(
+					"Message update skipped due to connection timeout. Will retry on next update."
+				);
+				paintballData.lastCount = NOT_YET_FETCHED; // Reset count to trigger fresh fetch next time
+				return;
+			}
 			log.warn(
 				"Either no lastMessageId or failed to fetch message, sending new message"
 			);
@@ -267,9 +278,18 @@ export default (client: Client) => {
 						`Hypixel API temporarily unreachable (${code}). Updating embed.`
 					);
 
-					paintballData.lastCount = API_UNAVAILABLE;
-					const embed = buildEmbed(null, null);
-					await updateMessage(channel, embed, info);
+					try {
+						paintballData.lastCount = API_UNAVAILABLE;
+						const embed = buildEmbed(null, null);
+						await updateMessage(channel, embed, info);
+					} catch (updateError) {
+						log.error(
+							"Failed to update message due to network error:",
+							updateError
+						);
+						// Reset lastCount so we try again next time
+						paintballData.lastCount = NOT_YET_FETCHED;
+					}
 					return;
 				}
 			}
