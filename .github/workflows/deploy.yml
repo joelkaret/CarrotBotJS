@@ -1,25 +1,22 @@
 name: Deploy to VM
 on:
     push:
-        branches: [main] # Runs on pushes to main
+        branches: [main] # Run on pushes to main
     workflow_dispatch: # Allow manual trigger from GitHub UI
 jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
+            - name: Setup SSH key
+              run: |
+                  mkdir -p ~/.ssh
+                  echo "${{ secrets.VM_SSH_KEY }}" > ~/.ssh/id_rsa
+                  chmod 600 ~/.ssh/id_rsa
+                  ssh-keyscan -H ${{ secrets.VM_HOST }} >> ~/.ssh/known_hosts
+
             - name: Deploy to VM via SSH
-              uses: Wandalen/wretry.action@master # Retry SSH deploy on failure
+              uses: Wandalen/wretry.action@v3.8.0
               with:
-                  action: appleboy/ssh-action@master # The actual ssh action
                   attempt_limit: 3
-                  attempt_delay: 120000 # ms (2 minutes)
-                  with: |
-                      host: ${{ secrets.VM_HOST }}
-                      username: ${{ secrets.VM_USER }}
-                      key: ${{ secrets.VM_SSH_KEY }}
-                      script: |
-                          cd ~/CarrotBotJS-main
-                          git pull origin main
-                          npm install
-                          npm run build
-                          sudo systemctl restart carrotbot
+                  attempt_delay: 120000 # ms (2 mins)
+                  command: ssh -i ~/.ssh/id_rsa ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} "cd ~/CarrotBotJS-main && git pull origin main && npm install && npm run build && sudo systemctl restart carrotbot"
