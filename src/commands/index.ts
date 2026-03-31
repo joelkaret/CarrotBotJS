@@ -7,6 +7,7 @@ export { default as leave } from "./Fun/leave";
 export { default as nickChange } from "./Fun/nickChange";
 export { default as pfp } from "./Fun/pfp";
 export { default as ping } from "./Fun/ping";
+export { default as remindme } from "./Fun/remindme";
 
 // Skillless Leaderboard commands
 export { default as leaderboardAdd } from "./Skillless-Leaderboard/leaderboard-add";

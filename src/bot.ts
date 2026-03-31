@@ -23,6 +23,7 @@ declare module "discord.js" {
 		handleCommands: () => void;
 		handleButtons: () => void;
 		handleSchedules: () => void;
+		handleReminders: () => Promise<void>;
 		dbLogin: () => Promise<void>;
 		ldbAdd: (
 			ign: string,
@@ -100,6 +101,7 @@ try {
 		client.handleSchedules();
 		await client.login(process.env.token);
 		await client.dbLogin();
+		await client.handleReminders();
 	})();
 } catch (error) {
 	log.error("Fatal error during bot initialization:", error);
